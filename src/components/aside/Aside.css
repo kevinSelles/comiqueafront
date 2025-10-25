@@ -1,0 +1,21 @@
+.aside {
+  width: 220px;
+  padding: 16px;
+  background-color: var(--color-light);
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aside-link {
+  text-decoration: none;
+  color: var(--color-text);
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.aside-link:hover {
+  background-color: var(--color-bg);
+}
