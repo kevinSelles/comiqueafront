@@ -1,14 +1,8 @@
-@font-face {
-  font-family: "pokemon";
-  src: url("/fonts/pocketMonk.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
 :root {
   --color-bg: #f5f5f5;
-  --color-primary: #1976d2;
+  --color-primary: #82b100;
   --color-text: #212121;
   --color-light: #ffffff;
 }

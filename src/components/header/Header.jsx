@@ -1,8 +1,9 @@
 import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ onSearch }) {
   const navigate = useNavigate();
+
 
   return (
     <header className="header">
@@ -19,7 +20,16 @@ export default function Header() {
           <h1 className="header-title">COMIQUEA</h1>
           <h2 className="slogan">Tu web de cómics en español</h2>
         </div>
-        <input type="text" placeholder="Buscar cómic..." className="header-search" />
+        <input
+          type="text"
+          placeholder="Buscar cómic, autor, ISBN, fecha..."
+          className="header-search"
+          onKeyDown={(e) => {
+          if (e.key === "Enter") {
+          onSearch(e.target.value.trim());
+          }
+          }}
+        />
       </div>
       <div className="header-right">
         <Link to="/login" className="header-button">Iniciar sesión</Link>

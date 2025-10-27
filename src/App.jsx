@@ -3,15 +3,18 @@ import Header from "./components/header/Header";
 import Aside from "./components/aside/Aside";
 import Footer from "./components/footer/Footer";
 import ComiqueaRouter from "./router/ComiqueaRouter";
+import { useState } from "react";
 
 function App() {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <div className="app-container">
-      <Header />
+      <Header onSearch={setSearchTerm} />
       <div className="app-main">
         <Aside />
         <section className="app-content">
-          <ComiqueaRouter />
+          <ComiqueaRouter searchTerm={searchTerm} />
         </section>
       </div>
       <Footer />
