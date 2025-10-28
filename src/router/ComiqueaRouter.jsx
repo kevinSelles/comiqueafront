@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import Comics from "../pages/comics/Comics";
 import News from "../pages/news/News";
-import Contact from "../pages/Contact";
+import Contact from "../pages/contact/Contact";
 
 export default function ComiqueaRouter({ searchTerm }) {
   return (
