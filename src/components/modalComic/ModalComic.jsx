@@ -1,16 +1,75 @@
 import "./ModalComic.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { API_URL } from "../../config/api";
+import { useAuth } from "../../context/AuthContext";
 
 export default function ModalComic({ comic, onClose }) {
+  const { user } = useAuth();
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const handleKey = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", handleKey);
     document.body.style.overflow = "hidden";
+
+    fetchComments();
+
     return () => {
       window.removeEventListener("keydown", handleKey);
       document.body.style.overflow = "";
     };
-  }, [onClose]);
+  }, [comic]);
+
+  const fetchComments = async () => {
+    try {
+      const res = await fetch(`${API_URL}/comments/${comic._id}`);
+      const data = await res.json();
+      setComments(data || []);
+    } catch (err) {
+      console.error("Error al cargar comentarios:", err);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!newComment.trim()) return;
+    if (!user) {
+      setError("Debes estar logueado para comentar.");
+      return;
+    }
+
+    setSending(true);
+    setError(null);
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_URL}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          content: newComment,
+          comic: comic._id,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Error al enviar el comentario");
+
+      const savedComment = await res.json();
+      setComments((prev) => [{ ...savedComment, user }, ...prev]);
+      setNewComment("");
+    } catch (err) {
+      console.error(err);
+      setError("No se pudo enviar el comentario.");
+    } finally {
+      setSending(false);
+    }
+  };
 
   if (!comic) return null;
 
@@ -47,8 +106,7 @@ export default function ModalComic({ comic, onClose }) {
             </p>
             <p className="modal-sub">
               <strong>
-                Autor{Array.isArray(comic.author) && comic.author.length > 1 ? "es" : ""}
-                :
+                Autor{Array.isArray(comic.author) && comic.author.length > 1 ? "es" : ""}:
               </strong>{" "}
               {Array.isArray(comic.author)
                 ? comic.author.join(" / ")
@@ -66,18 +124,32 @@ export default function ModalComic({ comic, onClose }) {
             </section>
             <section className="modal-comments">
               <h3>Comentarios</h3>
-              {Array.isArray(comic.comments) && comic.comments.length ? (
+              {comments.length ? (
                 <ul>
-                  {comic.comments.map((c, i) => (
+                  {comments.map((c, i) => (
                     <li key={i}>
                       <strong>{c.user?.userName || "Usuario"}:</strong>{" "}
-                      {c.text || c.body || "—"}
+                      {c.content || "—"}
                     </li>
                   ))}
                 </ul>
               ) : (
                 <p className="muted">Aún no hay comentarios.</p>
               )}
+              <form className="comment-form" onSubmit={handleSubmit}>
+                <textarea
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Escribe tu comentario..."
+                  rows={3}
+                  disabled={sending}
+                  required
+                />
+                <button type="submit" disabled={sending}>
+                  {sending ? "Enviando..." : "Enviar"}
+                </button>
+              </form>
+              {error && <p className="comment-error">{error}</p>}
             </section>
           </div>
         </div>

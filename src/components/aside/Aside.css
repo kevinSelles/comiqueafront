@@ -19,3 +19,35 @@
 .aside-link:hover {
   background-color: var(--color-bg);
 }
+
+.aside-dropdown {
+  position: relative;
+}
+
+.aside-dropdown-content {
+  display: flex;
+  top: 100%;
+  left: 0;
+  background-color: var(--color-light);
+  border: 1px solid #ddd;
+  width: 100%;
+  border-radius: 4px;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.aside-dropdown-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--color-text);
+}
+
+.aside-dropdown-item:hover {
+  background-color: var(--color-bg);
+}
+
+.aside-dropdown-button {
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
