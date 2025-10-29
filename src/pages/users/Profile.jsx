@@ -2,9 +2,11 @@ import "./Profile.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Profile() {
   const navigate = useNavigate();
+  const { logout } = useAuth();
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,6 +22,7 @@ export default function Profile() {
       navigate("/login");
       return;
     }
+
     const parsed = JSON.parse(storedUser);
     setUser(parsed);
     setFormData({
@@ -33,10 +36,21 @@ export default function Profile() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleEdit = () => setEditing(true);
-  const handleCancel = () => {
+  const handleEdit = (e) => {
+    e.preventDefault();
+    setEditing(true);
+    setMessage("");
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
     setEditing(false);
     setMessage("");
+    setFormData({
+      userName: user.userName,
+      email: user.email,
+      password: "******",
+    });
   };
 
   const handleSave = async (e) => {
@@ -45,39 +59,48 @@ export default function Profile() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${API_URL}/users/update/${user._id}`, {
-        method: "PATCH",
+      if (!token) {
+        setMessage("❌ Sesión expirada. Inicia sesión de nuevo.");
+        navigate("/login");
+        return;
+      }
+
+      const payload = { ...formData };
+      if (payload.password === "******") delete payload.password;
+
+      const res = await fetch(`${API_URL}/users/${user._id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setMessage("❌ Error al actualizar el perfil");
+        setMessage("❌ Error al actualizar el perfil.");
         return;
       }
 
       const updatedUser = {
         ...user,
-        userName: formData.userName,
-        email: formData.email,
+        userName: data.userName || formData.userName,
+        email: data.email || formData.email,
       };
+
       localStorage.setItem("user", JSON.stringify(updatedUser));
       setUser(updatedUser);
       setEditing(false);
-      setMessage("✅ Perfil actualizado correctamente");
+      setMessage("✅ Perfil actualizado correctamente.");
     } catch (error) {
       setMessage("❌ Error de conexión con el servidor.");
     }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    logout();
     navigate("/");
   };
 
@@ -86,7 +109,7 @@ export default function Profile() {
   return (
     <main className="profile-page">
       <h2>Mi Perfil</h2>
-      <form className="profile-form" onSubmit={handleSave}>
+      <form className="profile-form" onSubmit={handleSave} noValidate>
         <label>
           Nombre de usuario:
           <input
@@ -119,7 +142,11 @@ export default function Profile() {
         </label>
         <div className="profile-buttons">
           {!editing ? (
-            <button type="button" onClick={handleEdit} className="user-button primary">
+            <button
+              type="button"
+              onClick={handleEdit}
+              className="user-button primary"
+            >
               Modificar
             </button>
           ) : (
@@ -127,7 +154,11 @@ export default function Profile() {
               <button type="submit" className="user-button primary">
                 Guardar cambios
               </button>
-              <button type="button" onClick={handleCancel} className="user-button">
+              <button
+                type="button"
+                onClick={handleCancel}
+                className="user-button"
+              >
                 Cancelar
               </button>
             </>

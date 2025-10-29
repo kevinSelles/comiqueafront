@@ -2,12 +2,14 @@ import "./UserForms.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
   const [formData, setFormData] = useState({ userName: "", password: "" });
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,12 +30,11 @@ export default function Login() {
 
       if (!res.ok) {
         setSuccess(false);
-        setMessage(data || "❌ Usuario o contraseña incorrectos.");
+        setMessage(data?.message || "❌ Usuario o contraseña incorrectos.");
         return;
       }
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.userResponse));
+      login(data.userResponse, data.token);
 
       setSuccess(true);
       setMessage(`✅ Bienvenido, ${data.userResponse.userName}!`);

@@ -1,22 +1,10 @@
 import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) setUser(JSON.parse(storedUser));
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate("/");
-  };
+  const { user, logout } = useAuth();
 
   return (
     <header className="header">
@@ -38,9 +26,7 @@ export default function Header({ onSearch }) {
           placeholder="Buscar cómic, autor, ISBN, fecha..."
           className="header-search"
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onSearch(e.target.value.trim());
-            }
+            if (e.key === "Enter") onSearch(e.target.value.trim());
           }}
         />
       </div>
@@ -51,7 +37,7 @@ export default function Header({ onSearch }) {
             <Link to="/profile" className="header-button primary">
               Mi perfil
             </Link>
-            <button onClick={handleLogout} className="header-button">
+            <button onClick={logout} className="header-button">
               Cerrar sesión
             </button>
           </>
