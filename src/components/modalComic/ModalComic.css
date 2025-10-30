@@ -144,7 +144,7 @@
 
 .modal-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -156,7 +156,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s ease;
-  opacity: 0.7;
+  opacity: 0.3;
 }
 
 .modal-action-btn.active {

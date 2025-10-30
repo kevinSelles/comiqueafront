@@ -1,3 +1,5 @@
+import ComicList from "../../components/comicList/ComicList";
+
 export default function MyComics() {
-  return <h1>Mis cómics</h1>;
+  return <ComicList listName="owned" title="Mis Cómics" />;
 }

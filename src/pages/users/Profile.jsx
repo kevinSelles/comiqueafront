@@ -17,19 +17,43 @@ export default function Profile() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      navigate("/login");
-      return;
-    }
+    const fetchUserData = async () => {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) {
+        navigate("/login");
+        return;
+      }
 
-    const parsed = JSON.parse(storedUser);
-    setUser(parsed);
-    setFormData({
-      userName: parsed.userName,
-      email: parsed.email,
-      password: "******",
-    });
+      const parsed = JSON.parse(storedUser);
+      setUser(parsed);
+      setFormData({
+        userName: parsed.userName,
+        email: parsed.email,
+        password: "******",
+      });
+
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const res = await fetch(`${API_URL}/users/${parsed._id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          setUser(data);
+          localStorage.setItem("user", JSON.stringify(data));
+        } else {
+          console.error("Error al obtener datos del usuario:", data);
+        }
+      } catch (error) {
+        console.error("Error al conectar con el backend:", error);
+      }
+    };
+
+    fetchUserData();
   }, [navigate]);
 
   const handleChange = (e) => {
@@ -167,9 +191,11 @@ export default function Profile() {
       </form>
       <section className="profile-stats">
         <h3>Mis listas</h3>
-        <p>Favoritos: 0</p>
-        <p>Leídos: 0</p>
-        <p>Listas personales: 0</p>
+        <p>Favoritos: {user?.favorites?.length || 0}</p>
+        <p>Leídos: {user?.read?.length || 0}</p>
+        <p>Lo tengo: {user?.owned?.length || 0}</p>
+        <p>Lo quiero: {user?.wishlist?.length || 0}</p>
+        <p>Mis cómics creados: {user?.createdComics?.length || 0}</p>
       </section>
       <button onClick={handleLogout} className="logout-button">
         Cerrar sesión

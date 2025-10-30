@@ -1,3 +1,5 @@
+import ComicList from "../../components/comicList/ComicList";
+
 export default function Wanted() {
-  return <h1>Cómics que busco</h1>;
+  return <ComicList listName="wishlist" title="Deseados" />;
 }

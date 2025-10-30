@@ -1,3 +1,5 @@
+import ComicList from "../../components/comicList/ComicList";
+
 export default function Favourites() {
-  return <h1>Mis favoritos</h1>;
+  return <ComicList listName="favorites" title="Favoritos" />;
 }
