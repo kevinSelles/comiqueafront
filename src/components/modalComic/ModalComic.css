@@ -142,6 +142,33 @@
   margin-top: -0.25rem;
 }
 
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.modal-action-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+
+.modal-action-btn.active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.btn-fav { background-color: #e74c3c; color: white; }
+.btn-own { background-color: #3498db; color: white; }
+.btn-read { background-color: #2ecc71; color: white; }
+.btn-want { background-color: #f1c40f; color: black; }
+
 @media (max-width: 900px) {
   .modal-body {
     flex-direction: column;

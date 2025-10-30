@@ -9,14 +9,16 @@ export default function ModalComic({ comic, onClose }) {
   const [newComment, setNewComment] = useState("");
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
+  const [isFavourite, setIsFavourite] = useState(false);
+  const [isOwned, setIsOwned] = useState(false);
+  const [isRead, setIsRead] = useState(false);
+  const [isWanted, setIsWanted] = useState(false);
 
   useEffect(() => {
     const handleKey = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", handleKey);
     document.body.style.overflow = "hidden";
-
     fetchComments();
-
     return () => {
       window.removeEventListener("keydown", handleKey);
       document.body.style.overflow = "";
@@ -94,6 +96,32 @@ export default function ModalComic({ comic, onClose }) {
             />
           </div>
           <div className="modal-content">
+            <div className="modal-actions">
+              <button
+                className={`modal-action-btn btn-fav ${isFavourite ? "active" : ""}`}
+                onClick={() => setIsFavourite(!isFavourite)}
+              >
+                ❤️
+              </button>
+              <button
+                className={`modal-action-btn btn-own ${isOwned ? "active" : ""}`}
+                onClick={() => setIsOwned(!isOwned)}
+              >
+                Lo tengo
+              </button>
+              <button
+                className={`modal-action-btn btn-read ${isRead ? "active" : ""}`}
+                onClick={() => setIsRead(!isRead)}
+              >
+                Leído
+              </button>
+              <button
+                className={`modal-action-btn btn-want ${isWanted ? "active" : ""}`}
+                onClick={() => setIsWanted(!isWanted)}
+              >
+                Lo quiero
+              </button>
+            </div>
             <h2 className="modal-title">{comic.title}</h2>
             <p className="modal-sub">
               <strong>Contenido:</strong> {comic.content || "—"}
@@ -106,7 +134,11 @@ export default function ModalComic({ comic, onClose }) {
             </p>
             <p className="modal-sub">
               <strong>
-                Autor{Array.isArray(comic.author) && comic.author.length > 1 ? "es" : ""}:
+                Autor
+                {Array.isArray(comic.author) && comic.author.length > 1
+                  ? "es"
+                  : ""}
+                :
               </strong>{" "}
               {Array.isArray(comic.author)
                 ? comic.author.join(" / ")

@@ -6,6 +6,10 @@ import Contact from "../pages/contact/Contact";
 import Register from "../pages/users/Register";
 import Login from "../pages/users/Login";
 import Profile from "../pages/users/Profile";
+import MyComics from "../pages/myLists/MyComics";
+import Favourites from "../pages/myLists/Favourites";
+import Readed from "../pages/myLists/Readed";
+import Wanted from "../pages/myLists/Wanted";
 
 export default function ComiqueaRouter({ searchTerm }) {
   return (
@@ -17,6 +21,10 @@ export default function ComiqueaRouter({ searchTerm }) {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/mycomics" element={<MyComics />} />
+      <Route path="/favourites" element={<Favourites />} />
+      <Route path="/readed" element={<Readed />} />
+      <Route path="/wanted" element={<Wanted />} />
     </Routes>
   );
 }

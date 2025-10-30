@@ -20,9 +20,10 @@ export default function Aside() {
         </button>
         {open && (
           <div className="aside-dropdown-content">
-            <Link to="/favoritos" className="aside-link aside-dropdown-item">Favoritos</Link>
-            <Link to="/leidos" className="aside-link aside-dropdown-item">Leídos</Link>
-            <Link to="/wishlist" className="aside-link aside-dropdown-item">Wishlist</Link>
+            <Link to="/mycomics" className="aside-link aside-dropdown-item">Mis cómics</Link>
+            <Link to="/favourites" className="aside-link aside-dropdown-item">Favoritos</Link>
+            <Link to="/readed" className="aside-link aside-dropdown-item">Leídos</Link>
+            <Link to="/wanted" className="aside-link aside-dropdown-item">Deseados</Link>
           </div>
         )}
       </div>
