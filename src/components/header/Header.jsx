@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   return (
     <header className="header">
@@ -33,13 +33,13 @@ export default function Header({ onSearch }) {
       <div className="header-right">
         {user ? (
           <>
-            <span className="header-username">👋 {user.userName}</span>
+            <span className="header-username">{user.userName}</span>
             <Link to="/profile" className="header-button primary">
               Mi perfil
             </Link>
-            <button onClick={logout} className="header-button">
-              Cerrar sesión
-            </button>
+            <Link to="/comics/new" className="header-button primary" title="Añadir nuevo cómic">
+              ➕ Añadir cómic
+            </Link>
           </>
         ) : (
           <>
