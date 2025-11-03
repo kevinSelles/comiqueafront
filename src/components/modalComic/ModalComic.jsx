@@ -2,6 +2,8 @@ import "./ModalComic.css";
 import { useEffect, useState } from "react";
 import { API_URL } from "../../config/api";
 import { useAuth } from "../../context/AuthContext";
+import ComicForm from "../comicForm/ComicForm";
+
 
 export default function ModalComic({ comic, onClose }) {
   const { user } = useAuth();
@@ -13,6 +15,7 @@ export default function ModalComic({ comic, onClose }) {
   const [isOwned, setIsOwned] = useState(false);
   const [isRead, setIsRead] = useState(false);
   const [isWanted, setIsWanted] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     const handleKey = (e) => e.key === "Escape" && onClose();
@@ -173,94 +176,117 @@ export default function ModalComic({ comic, onClose }) {
             />
           </div>
           <div className="modal-content">
-            <div className="modal-actions">
-              <button
-                className={`modal-action-btn btn-fav ${isFavourite ? "active" : ""}`}
-                onClick={() => toggleList("favorites", setIsFavourite)}
-                aria-pressed={isFavourite}
-                title={isFavourite ? "Quitar de favoritos" : "Añadir a favoritos"}
-              >
-                ❤️
-              </button>
-              <button
-                className={`modal-action-btn btn-own ${isOwned ? "active" : ""}`}
-                onClick={() => toggleList("owned", setIsOwned)}
-                aria-pressed={isOwned}
-                title={isOwned ? "Quitar de mis cómics" : "Añadir a mis cómics"}
-              >
-                Lo tengo
-              </button>
-              <button
-                className={`modal-action-btn btn-read ${isRead ? "active" : ""}`}
-                onClick={() => toggleList("read", setIsRead)}
-                aria-pressed={isRead}
-                title={isRead ? "Marcar como no leído" : "Marcar como leído"}
-              >
-                Leído
-              </button>
-              <button
-                className={`modal-action-btn btn-want ${isWanted ? "active" : ""}`}
-                onClick={() => toggleList("wishlist", setIsWanted)}
-                aria-pressed={isWanted}
-                title={isWanted ? "Quitar de deseados" : "Añadir a deseados"}
-              >
-                Lo quiero
-              </button>
-            </div>
-            <h2 className="modal-title">{comic.title}</h2>
-            <p className="modal-sub">
-              <strong>Contenido:</strong> {comic.content || "—"}
-            </p>
-            <p className="modal-sub">
-              <strong>Fecha:</strong> {comic.releaseDate || "—"}
-            </p>
-            <p className="modal-sub">
-              <strong>Editorial:</strong> {comic.editorial || "—"}
-            </p>
-            <p className="modal-sub">
-              <strong>
-                Autor{Array.isArray(comic.author) && comic.author.length > 1 ? "es" : ""}:
-              </strong>{" "}
-              {Array.isArray(comic.author) ? comic.author.join(" / ") : comic.author || "—"}
-            </p>
-            <p className="modal-sub">
-              <strong>Páginas:</strong> {comic.pages || "—"}
-            </p>
-            <p className="modal-sub">
-              <strong>ISBN:</strong> {comic.isbn || "—"}
-            </p>
-            <section className="modal-synopsis">
-              <h3>Sinopsis</h3>
-              <p>{comic.synopsis || "No hay sinopsis disponible."}</p>
-            </section>
-            <section className="modal-comments">
-              <h3>Comentarios</h3>
-              {comments.length ? (
-                <ul>
-                  {comments.map((c, i) => (
-                    <li key={i}>
-                      <strong>{c.user?.userName || "Usuario"}:</strong> {c.content || "—"}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="muted">Aún no hay comentarios.</p>
-              )}
-              <form className="comment-form" onSubmit={handleSubmit}>
-                <textarea
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  placeholder="Escribe tu comentario..."
-                  rows={3}
-                  disabled={sending}
-                  required
-                />
-                <button type="submit" disabled={sending}>
-                  {sending ? "Enviando..." : "Enviar"}
-                </button>
-              </form>
-              {error && <p className="comment-error">{error}</p>}
-            </section>
+            {!editing ? (
+              <>
+                <div className="modal-actions">
+                  <button
+                    className={`modal-action-btn btn-fav ${isFavourite ? "active" : ""}`}
+                    onClick={() => toggleList("favorites", setIsFavourite)}
+                    aria-pressed={isFavourite}
+                    title={isFavourite ? "Quitar de favoritos" : "Añadir a favoritos"}
+                  >
+                    ❤️
+                  </button>
+                  <button
+                    className={`modal-action-btn btn-own ${isOwned ? "active" : ""}`}
+                    onClick={() => toggleList("owned", setIsOwned)}
+                    aria-pressed={isOwned}
+                    title={isOwned ? "Quitar de mis cómics" : "Añadir a mis cómics"}
+                  >
+                    Lo tengo
+                  </button>
+                  <button
+                    className={`modal-action-btn btn-read ${isRead ? "active" : ""}`}
+                    onClick={() => toggleList("read", setIsRead)}
+                    aria-pressed={isRead}
+                    title={isRead ? "Marcar como no leído" : "Marcar como leído"}
+                  >
+                    Leído
+                  </button>
+                  <button
+                    className={`modal-action-btn btn-want ${isWanted ? "active" : ""}`}
+                    onClick={() => toggleList("wishlist", setIsWanted)}
+                    aria-pressed={isWanted}
+                    title={isWanted ? "Quitar de deseados" : "Añadir a deseados"}
+                  >
+                    Lo quiero
+                  </button>
+                  {user && (
+                    <button
+                      onClick={() => setEditing(true)}
+                      className="btn-edit"
+                      title="Editar cómic"
+                    >
+                      ✏️ Editar
+                    </button>
+                  )}
+                </div>
+                <h2 className="modal-title">{comic.title}</h2>
+                <p className="modal-sub">
+                  <strong>Contenido:</strong> {comic.content || "—"}
+                </p>
+                <p className="modal-sub">
+                  <strong>Fecha:</strong> {comic.releaseDate || "—"}
+                </p>
+                <p className="modal-sub">
+                  <strong>Editorial:</strong> {comic.editorial || "—"}
+                </p>
+                <p className="modal-sub">
+                  <strong>
+                    Autor{Array.isArray(comic.author) && comic.author.length > 1 ? "es" : ""}:
+                  </strong>{" "}
+                  {Array.isArray(comic.author) ? comic.author.join(" / ") : comic.author || "—"}
+                </p>
+                <p className="modal-sub">
+                  <strong>Páginas:</strong> {comic.pages || "—"}
+                </p>
+                <p className="modal-sub">
+                  <strong>ISBN:</strong> {comic.isbn || "—"}
+                </p>
+                <section className="modal-synopsis">
+                  <h3>Sinopsis</h3>
+                  <p>{comic.synopsis || "No hay sinopsis disponible."}</p>
+                </section>
+                <section className="modal-comments">
+                  <h3>Comentarios</h3>
+                  {comments.length ? (
+                    <ul>
+                      {comments.map((c, i) => (
+                        <li key={i}>
+                          <strong>{c.user?.userName || "Usuario"}:</strong>{" "}
+                          {c.content || "—"}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="muted">Aún no hay comentarios.</p>
+                  )}
+                  <form className="comment-form" onSubmit={handleSubmit}>
+                    <textarea
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                      placeholder="Escribe tu comentario..."
+                      rows={3}
+                      disabled={sending}
+                      required
+                    />
+                    <button type="submit" disabled={sending}>
+                      {sending ? "Enviando..." : "Enviar"}
+                    </button>
+                  </form>
+                  {error && <p className="comment-error">{error}</p>}
+                </section>
+              </>
+            ) : (
+              <ComicForm
+                comic={comic}
+                onCancel={() => setEditing(false)}
+                onSuccess={(updatedComic) => {
+                  Object.assign(comic, updatedComic);
+                  setEditing(false);
+                }}
+              />
+            )}
           </div>
         </div>
       </div>

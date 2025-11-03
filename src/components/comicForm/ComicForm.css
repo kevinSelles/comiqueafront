@@ -1,39 +1,39 @@
-.new-comic-page {
+.comic-form-page {
   max-width: 600px;
   margin: 40px auto;
   padding: 24px;
   background-color: var(--color-light);
   border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
 }
 
-.new-comic-page h2 {
+.comic-form-page h2 {
   text-align: center;
   margin-bottom: 24px;
 }
 
-.new-comic-form {
+.comic-form {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.new-comic-form label {
+.comic-form label {
   display: flex;
   flex-direction: column;
   font-weight: 600;
   color: var(--color-text);
 }
 
-.new-comic-form input,
-.new-comic-form textarea {
+.comic-form input,
+.comic-form textarea {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
 }
 
-.new-comic-form textarea {
+.comic-form textarea {
   min-height: 80px;
   resize: vertical;
 }
@@ -48,6 +48,13 @@
   max-width: 200px;
   border-radius: 6px;
   border: 1px solid #ccc;
+}
+
+.comic-form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .submit-btn {
@@ -65,13 +72,27 @@
   background-color: var(--color-primary-dark);
 }
 
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.cancel-btn:hover {
+  background-color: #b5b5b5;
+}
+
 .form-message {
   margin-top: 16px;
   text-align: center;
   font-weight: 600;
 }
 
-.new-comic-form span.error-message {
+.error-message {
   color: red;
   font-size: 12px;
   margin-top: 2px;
