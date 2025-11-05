@@ -4,7 +4,6 @@ import { API_URL } from "../../config/api";
 import { useAuth } from "../../context/AuthContext";
 import ComicForm from "../comicForm/ComicForm";
 
-
 export default function ModalComic({ comic, onClose }) {
   const { user } = useAuth();
   const [comments, setComments] = useState([]);
@@ -153,6 +152,35 @@ export default function ModalComic({ comic, onClose }) {
     }
   };
 
+  const handleDeleteComic = async () => {
+    if (!user || user.rol !== "admin") {
+      alert("Solo los administradores pueden eliminar cómics.");
+      return;
+    }
+
+    const confirmed = window.confirm(`¿Seguro que deseas eliminar "${comic.title}"?`);
+    if (!confirmed) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${API_URL}/comics/${comic._id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) {
+        const errText = await res.text().catch(() => null);
+        throw new Error(errText || "Error al eliminar el cómic");
+      }
+
+      alert("✅ Cómic eliminado correctamente.");
+      onClose();
+    } catch (err) {
+      console.error("Error al eliminar cómic:", err);
+      alert("❌ No se pudo eliminar el cómic.");
+    }
+  };
+
   if (!comic) return null;
 
   return (
@@ -220,6 +248,15 @@ export default function ModalComic({ comic, onClose }) {
                       ✏️ Editar
                     </button>
                   )}
+                  {user?.rol === "admin" && (
+                    <button
+                      onClick={handleDeleteComic}
+                      className="btn-delete"
+                      title="Eliminar cómic"
+                    >
+                      🗑️ Eliminar
+                    </button>
+                  )}
                 </div>
                 <h2 className="modal-title">{comic.title}</h2>
                 <p className="modal-sub">
@@ -235,7 +272,9 @@ export default function ModalComic({ comic, onClose }) {
                   <strong>
                     Autor{Array.isArray(comic.author) && comic.author.length > 1 ? "es" : ""}:
                   </strong>{" "}
-                  {Array.isArray(comic.author) ? comic.author.join(" / ") : comic.author || "—"}
+                  {Array.isArray(comic.author)
+                    ? comic.author.join(" / ")
+                    : comic.author || "—"}
                 </p>
                 <p className="modal-sub">
                   <strong>Páginas:</strong> {comic.pages || "—"}

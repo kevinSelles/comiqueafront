@@ -130,6 +130,41 @@ export default function Profile() {
 
   if (!user) return null;
 
+  const handleDeleteAccount = async () => {
+  const confirmDelete = window.confirm(
+    "⚠️ Esta acción eliminará tu cuenta permanentemente. ¿Seguro que quieres continuar?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setMessage("❌ Sesión expirada. Inicia sesión de nuevo.");
+      navigate("/login");
+      return;
+    }
+
+    const res = await fetch(`${API_URL}/users/${user._id}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      setMessage("❌ Error al eliminar la cuenta: " + errorText);
+      return;
+    }
+
+    logout();
+    setMessage("✅ Cuenta eliminada correctamente.");
+    navigate("/");
+  } catch (error) {
+    console.error("Error al eliminar la cuenta:", error);
+    setMessage("❌ Error al conectar con el servidor.");
+  }
+};
+
   return (
     <main className="profile-page">
       <h2>Mi Perfil</h2>
@@ -197,9 +232,17 @@ export default function Profile() {
         <p>Lo quiero: {user?.wishlist?.length || 0}</p>
         <p>Mis cómics creados: {user?.createdComics?.length || 0}</p>
       </section>
-      <button onClick={handleLogout} className="logout-button">
-        Cerrar sesión
-      </button>
+      <div className="profile-actions">
+        <button onClick={handleLogout} className="logout-button">
+          Cerrar sesión
+        </button>
+        <button
+          onClick={handleDeleteAccount}
+          className="delete-account-button"
+        >
+          Eliminar cuenta
+        </button>
+      </div>
       {message && <p className="profile-message">{message}</p>}
     </main>
   );
