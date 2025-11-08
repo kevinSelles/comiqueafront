@@ -1,6 +1,7 @@
 import "./Aside.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import AdBanner from "../../utils/ads/bannerAside/AdBanner";
 
 export default function Aside() {
   const [open, setOpen] = useState(false);
@@ -27,6 +28,11 @@ export default function Aside() {
           </div>
         )}
       </div>
+      <AdBanner
+        image="https://res.cloudinary.com/damjp56im/image/upload/v1762567458/comics/pwoejlvcfxcyp0luolec.webp"
+        text="Cómic del mes, con un 5% de descuento"
+        link="https://amzn.to/47Qs0hC"
+      />
     </aside>
   );
 }

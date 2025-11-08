@@ -23,6 +23,7 @@ export default function Comics({ searchTerm }) {
 
         const res = await fetch(url);
         const data = await res.json();
+
         setComics(data.comics || []);
         setTotalPages(data.totalPages || 1);
       } catch (err) {
@@ -52,7 +53,7 @@ export default function Comics({ searchTerm }) {
                 onClick={() => setActiveComic(comic)}
               >
                 <img
-                  src={comic.image}
+                  src={comic.img}
                   alt={comic.title}
                   className="comic-image"
                   loading="lazy"
@@ -60,11 +61,16 @@ export default function Comics({ searchTerm }) {
                 <div className="comic-info">
                   <h3 className="comic-title">{comic.title}</h3>
                   <p className="comic-author">
-                    {Array.isArray(comic.author)
-                      ? comic.author.join(" / ")
-                      : comic.author || "—"}
+                    {Array.isArray(comic.authors) && comic.authors.length > 0
+                      ? comic.authors.length > 4
+                        ? `${comic.authors.slice(0, 4).join(" / ")}...`
+                        : comic.authors.join(" / ")
+                      : "Autor desconocido"}
                   </p>
-                  <p className="comic-date">{comic.releaseDate || "—"}</p>
+                  <p className="comic-date">{comic.date || "—"}</p>
+                  {comic.publisher && (
+                    <p className="comic-publisher">{comic.publisher}</p>
+                  )}
                 </div>
               </article>
             ))}

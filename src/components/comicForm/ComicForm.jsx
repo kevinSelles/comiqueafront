@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export default function ComicForm({ comic = null, onSuccess, onCancel }) {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [imagePreview, setImagePreview] = useState(comic?.image || null);
+  const [imagePreview, setImagePreview] = useState(comic?.img || null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -23,11 +23,11 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
   useEffect(() => {
     if (comic) {
       for (const key in comic) {
-        if (key !== "image" && key !== "_id" && key !== "__v") {
+        if (key !== "img" && key !== "_id" && key !== "__v") {
           setValue(key, comic[key]);
         }
       }
-      if (comic.image) setImagePreview(comic.image);
+      if (comic.img) setImagePreview(comic.img);
     }
   }, [comic, setValue]);
 
@@ -45,27 +45,29 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
       const payload = new FormData();
 
       if (formData.title) payload.append("title", formData.title);
-      if (formData.synopsis) payload.append("synopsis", formData.synopsis);
+      if (formData.description) payload.append("description", formData.description);
       if (formData.isbn) payload.append("isbn", formData.isbn);
-      if (formData.releaseDate) payload.append("releaseDate", formData.releaseDate);
-      if (formData.editorial) payload.append("editorial", formData.editorial);
-      if (formData.pages) payload.append("pages", formData.pages);
-      if (formData.content) payload.append("content", formData.content);
-      if (formData.author) {
+      if (formData.date) payload.append("date", formData.date);
+      if (formData.publisher) payload.append("publisher", formData.publisher);
+      if (formData.serie) payload.append("serie", formData.serie);
+      if (formData.language) payload.append("language", formData.language);
+      if (formData.format) payload.append("format", formData.format);
+
+      if (formData.authors) {
         let authorsArray = [];
-        if (typeof formData.author === "string") {
-          authorsArray = formData.author
+        if (typeof formData.authors === "string") {
+          authorsArray = formData.authors
             .split(",")
             .map((a) => a.trim())
             .filter((a) => a);
-        } else if (Array.isArray(formData.author)) {
-          authorsArray = formData.author.map((a) => a.trim()).filter((a) => a);
+        } else if (Array.isArray(formData.authors)) {
+          authorsArray = formData.authors.map((a) => a.trim()).filter((a) => a);
         }
-        authorsArray.forEach((a) => payload.append("author", a));
+        authorsArray.forEach((a) => payload.append("authors", a));
       }
 
-      if (formData.image && formData.image.length > 0) {
-        payload.append("image", formData.image[0]);
+      if (formData.img && formData.img.length > 0) {
+        payload.append("image", formData.img[0]);
       }
 
       const isEdit = Boolean(comic);
@@ -79,22 +81,20 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
       });
 
       const data = await res.json();
-
       if (!res.ok) throw new Error(data.message || "Error en el formulario");
 
-      setMessage(
-        isEdit
-          ? "✅ Cómic actualizado correctamente."
-          : "✅ Cómic creado correctamente."
-      );
+      setMessage(isEdit ? "✅ Cómic actualizado correctamente." : "✅ Cómic creado correctamente.");
 
       if (onSuccess) onSuccess(data);
-
       if (!isEdit) {
-        reset();
-        setImagePreview(null);
-        setTimeout(() => navigate(`/comics/${data._id}`), 1200);
-      }
+        setMessage("✅ Cómic creado correctamente.");
+        setTimeout(() => {
+          reset();
+          setImagePreview(null);
+          navigate(`/`);
+        }, 1500);
+};
+
     } catch (error) {
       setMessage(`❌ ${error.message}`);
     } finally {
@@ -118,35 +118,21 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
       <form className="comic-form" onSubmit={handleSubmit(onSubmit)}>
         <label>
           Título *
-          <input
-            type="text"
-            {...register("title", { required: "El título es obligatorio" })}
-          />
-          {errors.title && (
-            <span className="error-message">{errors.title.message}</span>
-          )}
+          <input type="text" {...register("title", { required: "El título es obligatorio" })} />
+          {errors.title && <span className="error-message">{errors.title.message}</span>}
         </label>
         <label>
-          Sinopsis *
-          <textarea
-            {...register("synopsis", { required: "La sinopsis es obligatoria" })}
-          />
-          {errors.synopsis && (
-            <span className="error-message">{errors.synopsis.message}</span>
-          )}
+          Descripción *
+          <textarea {...register("description", { required: "La descripción es obligatoria" })} />
+          {errors.description && <span className="error-message">{errors.description.message}</span>}
         </label>
         <label>
           Autor/es * (separar por comas)
-          <input
-            type="text"
-            {...register("author", { required: "El autor es obligatorio" })}
-          />
-          {errors.author && (
-            <span className="error-message">{errors.author.message}</span>
-          )}
+          <input type="text" {...register("authors", { required: "El autor es obligatorio" })} />
+          {errors.authors && <span className="error-message">{errors.authors.message}</span>}
         </label>
         <label>
-          ISBN * (solo números)
+          ISBN *
           <input
             type="text"
             {...register("isbn", {
@@ -157,25 +143,27 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
               },
             })}
           />
-          {errors.isbn && (
-            <span className="error-message">{errors.isbn.message}</span>
-          )}
+          {errors.isbn && <span className="error-message">{errors.isbn.message}</span>}
         </label>
         <label>
           Fecha de publicación
-          <input type="text" {...register("releaseDate")} />
+          <input type="text" {...register("date")} />
+        </label>
+        <label>
+          Colección
+          <input type="text" {...register("serie")} />
         </label>
         <label>
           Editorial
-          <input type="text" {...register("editorial")} />
+          <input type="text" {...register("publisher")} />
         </label>
         <label>
-          Páginas
-          <input type="number" {...register("pages", { min: 1, valueAsNumber: true })} />
+          Idioma
+          <input type="text" {...register("language")} />
         </label>
         <label>
-          Contenido
-          <textarea {...register("content")} />
+          Formato
+          <input type="text" {...register("format")} />
         </label>
         <label>
           Portada
@@ -184,7 +172,7 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
             accept="image/*"
             onChange={(e) => {
               if (e.target.files[0]) {
-                setValue("image", e.target.files);
+                setValue("img", e.target.files);
                 setImagePreview(URL.createObjectURL(e.target.files[0]));
               }
             }}

@@ -7,6 +7,12 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
+.user-page h2 {
+  text-align: center;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
 .user-form {
   display: flex;
   flex-direction: column;
@@ -40,7 +46,7 @@
 }
 
 .user-button:hover {
-  background-color: var(--color-primary-dark);
+  background-color: #5f8100;
 }
 
 .user-error {

@@ -6,6 +6,8 @@
   color: var(--color-light);
   height: 210px;
   width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  z-index: 10;
 }
 
 .header-left {
@@ -72,6 +74,7 @@
 }
 
 .header-button {
+  text-align: center;
   text-decoration: none;
   padding: 8px 12px;
   border-radius: 4px;

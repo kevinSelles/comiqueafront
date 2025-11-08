@@ -45,13 +45,8 @@ export default function ModalComic({ comic, onClose }) {
     if (!Array.isArray(list)) return false;
     return list.some((c) => {
       if (!c) return false;
-      if (typeof c === "string") return c === comicId;
-      if (typeof c === "object" && c._id) return c._id.toString() === comicId.toString();
-      try {
-        return c.toString() === comicId.toString();
-      } catch {
-        return false;
-      }
+      const id = typeof c === "object" ? c._id || c : c;
+      return id.toString() === comicId.toString();
     });
   };
 
@@ -144,9 +139,7 @@ export default function ModalComic({ comic, onClose }) {
       }
 
       const updatedList = await res.json();
-
-      const exists = itemExistsInList(updatedList, comic._id);
-      stateSetter(Boolean(exists));
+      stateSetter(itemExistsInList(updatedList, comic._id));
     } catch (err) {
       console.error("Error al modificar la lista:", err);
     }
@@ -186,9 +179,7 @@ export default function ModalComic({ comic, onClose }) {
   return (
     <div
       className="modal-overlay"
-      onClick={(e) => {
-        if (e.target.classList.contains("modal-overlay")) onClose();
-      }}
+      onClick={(e) => e.target.classList.contains("modal-overlay") && onClose()}
     >
       <div className="modal" role="dialog" aria-modal="true">
         <button className="modal-close" onClick={onClose} aria-label="Cerrar">
@@ -196,12 +187,7 @@ export default function ModalComic({ comic, onClose }) {
         </button>
         <div className="modal-body">
           <div className="modal-image-wrap">
-            <img
-              src={comic.image}
-              alt={comic.title}
-              className="modal-image"
-              loading="lazy"
-            />
+            <img src={comic.img} alt={comic.title} className="modal-image" loading="lazy" />
           </div>
           <div className="modal-content">
             {!editing ? (
@@ -240,51 +226,34 @@ export default function ModalComic({ comic, onClose }) {
                     Lo quiero
                   </button>
                   {user && (
-                    <button
-                      onClick={() => setEditing(true)}
-                      className="btn-edit"
-                      title="Editar cómic"
-                    >
+                    <button onClick={() => setEditing(true)} className="btn-edit" title="Editar cómic">
                       ✏️ Editar
                     </button>
                   )}
                   {user?.rol === "admin" && (
-                    <button
-                      onClick={handleDeleteComic}
-                      className="btn-delete"
-                      title="Eliminar cómic"
-                    >
+                    <button onClick={handleDeleteComic} className="btn-delete" title="Eliminar cómic">
                       🗑️ Eliminar
                     </button>
                   )}
                 </div>
                 <h2 className="modal-title">{comic.title}</h2>
+                <p className="modal-sub"><strong>Fecha:</strong> {comic.date || "—"}</p>
+                <p className="modal-sub"><strong>Editorial:</strong> {comic.publisher || "—"}</p>
                 <p className="modal-sub">
-                  <strong>Contenido:</strong> {comic.content || "—"}
+                  <strong>Autor{Array.isArray(comic.authors) && comic.authors.length > 1 ? "es" : ""}:</strong>{" "}
+                  {Array.isArray(comic.authors) ? comic.authors.join(" / ") : comic.authors || "—"}
                 </p>
-                <p className="modal-sub">
-                  <strong>Fecha:</strong> {comic.releaseDate || "—"}
-                </p>
-                <p className="modal-sub">
-                  <strong>Editorial:</strong> {comic.editorial || "—"}
-                </p>
-                <p className="modal-sub">
-                  <strong>
-                    Autor{Array.isArray(comic.author) && comic.author.length > 1 ? "es" : ""}:
-                  </strong>{" "}
-                  {Array.isArray(comic.author)
-                    ? comic.author.join(" / ")
-                    : comic.author || "—"}
-                </p>
-                <p className="modal-sub">
-                  <strong>Páginas:</strong> {comic.pages || "—"}
-                </p>
-                <p className="modal-sub">
-                  <strong>ISBN:</strong> {comic.isbn || "—"}
-                </p>
+                {comic.serie && <p className="modal-sub"><strong>Colección:</strong> {comic.serie}</p>}
+                {comic.format && <p className="modal-sub"><strong>Formato:</strong> {comic.format}</p>}
+                {comic.language && <p className="modal-sub"><strong>Lenguaje:</strong> {comic.language}</p>}
+                {comic.characters?.length > 0 && <p className="modal-sub"><strong>Personajes:</strong> {comic.characters.join(" / ")}</p>}
+                {comic.pages && <p className="modal-sub"><strong>Páginas:</strong> {comic.pages}</p>}
+                {comic.isbn && <p className="modal-sub"><strong>ISBN:</strong> {comic.isbn}</p>}
+                {comic.price && <p className="modal-sub"><strong>Precio:</strong> {comic.price} €</p>}
+                {comic.availability && <p className="modal-sub"><strong>Disponibilidad:</strong> {comic.availability}</p>}
                 <section className="modal-synopsis">
                   <h3>Sinopsis</h3>
-                  <p>{comic.synopsis || "No hay sinopsis disponible."}</p>
+                  <p>{comic.description || "No hay sinopsis disponible."}</p>
                 </section>
                 <section className="modal-comments">
                   <h3>Comentarios</h3>
@@ -292,8 +261,7 @@ export default function ModalComic({ comic, onClose }) {
                     <ul>
                       {comments.map((c, i) => (
                         <li key={i}>
-                          <strong>{c.user?.userName || "Usuario"}:</strong>{" "}
-                          {c.content || "—"}
+                          <strong>{c.user?.userName || "Usuario"}:</strong> {c.content || "—"}
                         </li>
                       ))}
                     </ul>
@@ -309,9 +277,7 @@ export default function ModalComic({ comic, onClose }) {
                       disabled={sending}
                       required
                     />
-                    <button type="submit" disabled={sending}>
-                      {sending ? "Enviando..." : "Enviar"}
-                    </button>
+                    <button type="submit" disabled={sending}>{sending ? "Enviando..." : "Enviar"}</button>
                   </form>
                   {error && <p className="comment-error">{error}</p>}
                 </section>
