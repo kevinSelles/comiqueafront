@@ -1,0 +1,20 @@
+export default function ComicCard({ comic, onClick }) {
+  const authors =
+    Array.isArray(comic.authors) && comic.authors.length > 0
+      ? comic.authors.length > 4
+        ? `${comic.authors.slice(0, 4).join(" / ")}...`
+        : comic.authors.join(" / ")
+      : "Autor desconocido";
+
+  return (
+    <article className="comic-card" onClick={() => onClick(comic)}>
+      <img src={comic.img} alt={comic.title} className="comic-image" loading="lazy" />
+      <div className="comic-info">
+        <h3 className="comic-title">{comic.title}</h3>
+        <p className="comic-author">{authors}</p>
+        <p className="comic-date">{comic.date || "—"}</p>
+        {comic.publisher && <p className="comic-publisher">{comic.publisher}</p>}
+      </div>
+    </article>
+  );
+}

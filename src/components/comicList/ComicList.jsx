@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { API_URL } from "../../config/api";
 import { useAuth } from "../../context/AuthContext";
 import ModalComic from "../modalComic/ModalComic";
+import ComicCard from "./ComicCard";
 
 export default function ComicList({ listName, title }) {
   const { user } = useAuth();
@@ -65,28 +66,7 @@ export default function ComicList({ listName, title }) {
       <h2 className="comics-title">{title}</h2>
       <section className="comics-grid">
         {comics.map((comic) => (
-          <article
-            key={comic._id || Math.random()}
-            className="comic-card"
-            onClick={() => handleComicClick(comic)}
-          >
-            <img
-              src={comic.img}
-              alt={comic.title}
-              className="comic-image"
-              loading="lazy"
-            />
-            <div className="comic-info">
-              <h3 className="comic-title">{comic.title}</h3>
-              <p className="comic-author">
-                {Array.isArray(comic.authors) && comic.authors.length > 0
-                  ? comic.authors.join(" / ")
-                  : "Autor desconocido"}
-              </p>
-              <p className="comic-date">{comic.date || "—"}</p>
-              {comic.publisher && <p className="comic-publisher">{comic.publisher}</p>}
-            </div>
-          </article>
+          <ComicCard key={comic._id || Math.random()} comic={comic} onClick={handleComicClick} />
         ))}
       </section>
       {selectedComic && (

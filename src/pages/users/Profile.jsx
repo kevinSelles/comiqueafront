@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import { useAuth } from "../../context/AuthContext";
+import FormUser from "../../components/profile/UserForm";
+import ProfileStats from "../../components/profile/ProfileStats";
+import ProfileActions from "../../components/profile/ProfileActions";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -56,16 +59,8 @@ export default function Profile() {
     fetchUserData();
   }, [navigate]);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleEdit = (e) => {
-    e.preventDefault();
-    setEditing(true);
-    setMessage("");
-  };
-
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleEdit = (e) => { e.preventDefault(); setEditing(true); setMessage(""); };
   const handleCancel = (e) => {
     e.preventDefault();
     setEditing(false);
@@ -83,166 +78,72 @@ export default function Profile() {
 
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setMessage("❌ Sesión expirada. Inicia sesión de nuevo.");
-        navigate("/login");
-        return;
-      }
+      if (!token) { setMessage("❌ Sesión expirada. Inicia sesión de nuevo."); navigate("/login"); return; }
 
       const payload = { ...formData };
       if (payload.password === "******") delete payload.password;
 
       const res = await fetch(`${API_URL}/users/${user._id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload),
       });
 
       const data = await res.json();
 
-      if (!res.ok) {
-        setMessage("❌ Error al actualizar el perfil.");
-        return;
-      }
+      if (!res.ok) { setMessage("❌ Error al actualizar el perfil."); return; }
 
-      const updatedUser = {
-        ...user,
-        userName: data.userName || formData.userName,
-        email: data.email || formData.email,
-      };
-
+      const updatedUser = { ...user, userName: data.userName || formData.userName, email: data.email || formData.email };
       localStorage.setItem("user", JSON.stringify(updatedUser));
       setUser(updatedUser);
       setEditing(false);
       setMessage("✅ Perfil actualizado correctamente.");
-    } catch (error) {
-      setMessage("❌ Error de conexión con el servidor.");
-    }
+    } catch { setMessage("❌ Error de conexión con el servidor."); }
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
+  const handleLogout = () => { logout(); navigate("/"); };
+
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm(
+      "⚠️ Esta acción eliminará tu cuenta permanentemente. ¿Seguro que quieres continuar?"
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) { setMessage("❌ Sesión expirada. Inicia sesión de nuevo."); navigate("/login"); return; }
+
+      const res = await fetch(`${API_URL}/users/${user._id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) { const errorText = await res.text(); setMessage("❌ Error al eliminar la cuenta: " + errorText); return; }
+
+      logout();
+      setMessage("✅ Cuenta eliminada correctamente.");
+      navigate("/");
+    } catch (error) {
+      console.error("Error al eliminar la cuenta:", error);
+      setMessage("❌ Error al conectar con el servidor.");
+    }
   };
 
   if (!user) return null;
 
-  const handleDeleteAccount = async () => {
-  const confirmDelete = window.confirm(
-    "⚠️ Esta acción eliminará tu cuenta permanentemente. ¿Seguro que quieres continuar?"
-  );
-
-  if (!confirmDelete) return;
-
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setMessage("❌ Sesión expirada. Inicia sesión de nuevo.");
-      navigate("/login");
-      return;
-    }
-
-    const res = await fetch(`${API_URL}/users/${user._id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      setMessage("❌ Error al eliminar la cuenta: " + errorText);
-      return;
-    }
-
-    logout();
-    setMessage("✅ Cuenta eliminada correctamente.");
-    navigate("/");
-  } catch (error) {
-    console.error("Error al eliminar la cuenta:", error);
-    setMessage("❌ Error al conectar con el servidor.");
-  }
-};
-
   return (
     <main className="profile-page">
       <h2>Mi Perfil</h2>
-      <form className="profile-form" onSubmit={handleSave} noValidate>
-        <label>
-          Nombre de usuario:
-          <input
-            type="text"
-            name="userName"
-            value={formData.userName}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </label>
-        <label>
-          Correo electrónico:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </label>
-        <label>
-          Contraseña:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            disabled={!editing}
-          />
-        </label>
-        <div className="profile-buttons">
-          {!editing ? (
-            <button
-              type="button"
-              onClick={handleEdit}
-              className="user-button primary"
-            >
-              Modificar
-            </button>
-          ) : (
-            <>
-              <button type="submit" className="user-button primary">
-                Guardar cambios
-              </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="user-button"
-              >
-                Cancelar
-              </button>
-            </>
-          )}
-        </div>
-      </form>
-      <section className="profile-stats">
-        <h3>Mis listas</h3>
-        <p>Favoritos: {user?.favorites?.length || 0}</p>
-        <p>Leídos: {user?.read?.length || 0}</p>
-        <p>Lo tengo: {user?.owned?.length || 0}</p>
-        <p>Lo quiero: {user?.wishlist?.length || 0}</p>
-        <p>Mis cómics creados: {user?.createdComics?.length || 0}</p>
-      </section>
-      <div className="profile-actions">
-        <button onClick={handleLogout} className="logout-button">
-          Cerrar sesión
-        </button>
-        <button
-          onClick={handleDeleteAccount}
-          className="delete-account-button"
-        >
-          Eliminar cuenta
-        </button>
-      </div>
+      <FormUser
+        formData={formData}
+        editing={editing}
+        handleChange={handleChange}
+        handleEdit={handleEdit}
+        handleCancel={handleCancel}
+        handleSave={handleSave}
+      />
+      <ProfileStats user={user} />
+      <ProfileActions handleLogout={handleLogout} handleDeleteAccount={handleDeleteAccount} />
       {message && <p className="profile-message">{message}</p>}
     </main>
   );

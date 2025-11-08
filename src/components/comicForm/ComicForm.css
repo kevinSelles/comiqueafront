@@ -82,7 +82,7 @@
 }
 
 .submit-btn:hover {
-  background-color: var(--color-primary-dark);
+  background-color: #5f8100;
 }
 
 .cancel-btn {
