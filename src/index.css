@@ -38,5 +38,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: Roboto, sans-serif;
-  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
