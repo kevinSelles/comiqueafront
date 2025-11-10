@@ -12,6 +12,7 @@
 
 .aside-link{
   text-decoration: none;
+  font-weight: bold;
   color: var(--color-text);
   padding: 8px 12px;
   border-radius: 4px;

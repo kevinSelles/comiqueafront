@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import FormUser from "../../components/profile/UserForm";
 import ProfileStats from "../../components/profile/ProfileStats";
 import ProfileActions from "../../components/profile/ProfileActions";
+import { useHandleUserSave } from "../../config/useHandleUserSave";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ export default function Profile() {
     password: "",
   });
   const [message, setMessage] = useState("");
+
+  const handleSave = useHandleUserSave(setMessage, setUser, setEditing);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -44,7 +47,6 @@ export default function Profile() {
         });
 
         const data = await res.json();
-
         if (res.ok) {
           setUser(data);
           localStorage.setItem("user", JSON.stringify(data));
@@ -55,12 +57,16 @@ export default function Profile() {
         console.error("Error al conectar con el backend:", error);
       }
     };
-
     fetchUserData();
   }, [navigate]);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const handleEdit = (e) => { e.preventDefault(); setEditing(true); setMessage(""); };
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleEdit = (e) => {
+    e.preventDefault();
+    setEditing(true);
+    setMessage("");
+  };
   const handleCancel = (e) => {
     e.preventDefault();
     setEditing(false);
@@ -70,63 +76,6 @@ export default function Profile() {
       email: user.email,
       password: "******",
     });
-  };
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-    setMessage("");
-
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) { setMessage("❌ Sesión expirada. Inicia sesión de nuevo."); navigate("/login"); return; }
-
-      const payload = { ...formData };
-      if (payload.password === "******") delete payload.password;
-
-      const res = await fetch(`${API_URL}/users/${user._id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) { setMessage("❌ Error al actualizar el perfil."); return; }
-
-      const updatedUser = { ...user, userName: data.userName || formData.userName, email: data.email || formData.email };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
-      setEditing(false);
-      setMessage("✅ Perfil actualizado correctamente.");
-    } catch { setMessage("❌ Error de conexión con el servidor."); }
-  };
-
-  const handleLogout = () => { logout(); navigate("/"); };
-
-  const handleDeleteAccount = async () => {
-    const confirmDelete = window.confirm(
-      "⚠️ Esta acción eliminará tu cuenta permanentemente. ¿Seguro que quieres continuar?"
-    );
-    if (!confirmDelete) return;
-
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) { setMessage("❌ Sesión expirada. Inicia sesión de nuevo."); navigate("/login"); return; }
-
-      const res = await fetch(`${API_URL}/users/${user._id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      if (!res.ok) { const errorText = await res.text(); setMessage("❌ Error al eliminar la cuenta: " + errorText); return; }
-
-      logout();
-      setMessage("✅ Cuenta eliminada correctamente.");
-      navigate("/");
-    } catch (error) {
-      console.error("Error al eliminar la cuenta:", error);
-      setMessage("❌ Error al conectar con el servidor.");
-    }
   };
 
   if (!user) return null;
@@ -140,10 +89,10 @@ export default function Profile() {
         handleChange={handleChange}
         handleEdit={handleEdit}
         handleCancel={handleCancel}
-        handleSave={handleSave}
+        handleSave={(e) => handleSave(e, formData, user)}
       />
       <ProfileStats user={user} />
-      <ProfileActions handleLogout={handleLogout} handleDeleteAccount={handleDeleteAccount} />
+      <ProfileActions user={user} setMessage={setMessage} />
       {message && <p className="profile-message">{message}</p>}
     </main>
   );
