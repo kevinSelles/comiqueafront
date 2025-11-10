@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./News.css";
+import { API_URL } from "../../config/api";
 
 export default function News() {
   const [news, setNews] = useState([]);
@@ -9,7 +10,7 @@ export default function News() {
   useEffect(() => {
     async function fetchNews() {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/news");
+        const response = await fetch(`${API_URL}/news`);
         if (!response.ok) throw new Error("Error en la respuesta del servidor");
         const data = await response.json();
 
