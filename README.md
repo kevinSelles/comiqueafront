@@ -1,13 +1,82 @@
-- En main.jsx uso react-router-dom para envolver mediante la etiqueta BrowserRouter a toda la App.
+# Comiquea - Frontend
 
-- En App.jsx creo la estructura base de la web, como Header, Aside y Footer.
+Este es el frontend de **Comiquea**, la web para organizar tu comicteca, consultar información de cómics, dejar comentarios y mantener listas personales de favoritos, leídos, comprados o deseados.
 
-- En src/router/ComiqueaRouter.jsx he colocado todas las rutas que mostrará cada section que aparecerá en el main segun se pulsen los botones del aside.
+El proyecto está creado con **React** y **Vite** como bundler.
 
-- Creado AuthContext en src/context/AuthContext.jsx para informar a la App de cuando se ha iniciado o cerrado sesion, ya que surgia un problema en el que al iniciar/cerrar sesión la web no actualizaba la información mediante simples props como nombre de usuario y se seguian mostrando los botones de usuario incluso con la sesión cerrada.
+---
 
-- En components, se encuentra el archivo ComicLists.jsx, para crear la estructura que tendrá la lista de cómics y poder reutilizarlo en diferentes paginas sin repetir código, como en la lista de favoritos, cómics que tengo, cómics leídos, etc.
+## Tecnologías y dependencias
 
-- En la carpeta config, además de los parámetros reutilizables de la api, también incluyo dos hooks que sirven para albergar la lógica que hay para modificar los datos de un usuario existente (useHandleUserSave.js) y para gestionar la carga de cómics desde el backend (useComics.js).
+- **React 19**
+- **React Router DOM **: para gestionar la navegación entre páginas como SPA.
+- **React Hook Form **: para la gestión de formularios.
+- **Vite**: bundler y entorno de desarrollo.
 
-- En la raiz del proyecto he colocado el archivo vercel.json, para solucionar el problema de que siendo una SPA, al recargar el navegador mientras se usaba la web, daba error al cargar la web dependiendo de la extension en la que te encontrases. Ahora este archivo redirecciona al index.html y React Router se encarga de mostrar la web correctamente.
+---
+
+## Rutas del Frontend
+
+| Ruta                | Componente / Página                  | Descripción                                           |
+|--------------------|-------------------------------------|------------------------------------------------------|
+| `/`                | `Home`                              | Página de inicio                                     |
+| `/comics`          | `Comics`                            | Listado general de cómics                            |
+| `/comics/new`      | `NewComic`                           | Formulario para añadir un nuevo cómic               |
+| `/news`            | `News`                              | Noticias relacionadas con cómics                    |
+| `/contact`         | `Contact`                            | Formulario de contacto                               |
+| `/register`        | `Register`                           | Registro de nuevos usuarios                          |
+| `/login`           | `Login`                              | Login de usuarios                                    |
+| `/profile`         | `Profile`                            | Perfil del usuario                                   |
+| `/mycomics`        | `MyComics`                           | Lista de cómics del usuario                          |
+| `/favourites`      | `Favourites`                         | Lista de cómics favoritos                            |
+| `/readed`          | `Readed`                             | Lista de cómics leídos                               |
+| `/wanted`          | `Wanted`                             | Lista de cómics deseados                             |
+
+
+## Estructura del proyecto
+
+### Archivos principales
+
+- **main.jsx**  
+  Envuelve la aplicación con `<BrowserRouter>` para habilitar el enrutado de la SPA.
+
+- **App.jsx**  
+  Define la estructura base de la web, incluyendo **Header**, **Aside** y **Footer**.
+
+- **src/router/ComiqueaRouter.jsx**  
+  Contiene todas las rutas que renderizan las diferentes secciones del `main` según donde se pulse en el Aside.
+
+### Context y gestión de sesión
+
+- **src/context/AuthContext.jsx**  
+  Proporciona la información de sesión a toda la App.  
+  Permite actualizar la UI cuando un usuario inicia o cierra sesión, evitando que se sigan mostrando botones de usuario incorrectos.
+
+### Componentes reutilizables
+
+- **src/components/ComicLists.jsx**  
+  Componente que crea la estructura de una lista de cómics reutilizable en diferentes páginas: favoritos, leídos, comprados, deseados, etc.  
+  Evita duplicar código y mantiene consistencia visual.
+
+### Configuración y hooks
+
+- **src/config/**  
+  - Parámetros reutilizables de la API  
+  - Hooks personalizados:  
+    - `useHandleUserSave.js`: lógica para modificar los datos de un usuario existente  
+    - `useComics.js`: gestión de carga de cómics desde el backend  
+
+### Despliegue y SPA
+
+- **vercel.json**  
+  Configura la SPA para que al recargar la web en cualquier ruta, se redirija a `index.html` y React Router se encargue de renderizar correctamente la página correspondiente.  
+  Soluciona errores de recarga o 404.
+
+---
+
+## Notas importantes
+
+- La web está diseñada como SPA, por lo que todas las interacciones se gestionan sin recargar la página.
+- La información del usuario se gestiona mediante Context y hooks, no mediante props simples, para asegurar que los cambios de sesión se reflejen correctamente.
+- Los componentes reutilizables permiten mantener consistencia en el diseño y lógica de la aplicación.
+
