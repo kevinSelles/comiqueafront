@@ -165,12 +165,30 @@
   }
 }
 
-@media (max-width: 484px) {
+@media (max-width: 444px) {
+  .comics-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
   .comic-card {
-    height: 330px;
+    flex-direction: row;
+    width: 90%;
+    max-width: none;
+    height: auto;
   }
 
   .comic-image {
-    height: 150px;
+    width: 40%;
+    height: auto;
+    object-fit: contain;
+    padding: 0 0 0.5rem 0.5rem;
+  }
+
+  .comic-info {
+    width: 60%;
+    padding: 1rem;
   }
 }
