@@ -8,7 +8,7 @@ El proyecto está creado con **React** y **Vite**.
 
 ## Tecnologías y dependencias
 
-- **React 19**
+- **React**
 - **React Router DOM **: para gestionar la navegación entre páginas como SPA.
 - **React Hook Form **: para la gestión de formularios.
 - **Vite**: bundler y entorno de desarrollo.
