@@ -8,4 +8,6 @@
 
 - En components, se encuentra el archivo ComicLists.jsx, para crear la estructura que tendrá la lista de cómics y poder reutilizarlo en diferentes paginas sin repetir código, como en la lista de favoritos, cómics que tengo, cómics leídos, etc.
 
-- En la carpeta config, además de los parámetros de la api, tambien incluyo dos hooks que sirven para albergar la lógica que hay para modificar los datos de un usuario existente (useHandleUserSave.js) y para gestionar la carga de cómics desde el backend (useComics.js).
+- En la carpeta config, además de los parámetros reutilizables de la api, también incluyo dos hooks que sirven para albergar la lógica que hay para modificar los datos de un usuario existente (useHandleUserSave.js) y para gestionar la carga de cómics desde el backend (useComics.js).
+
+- En la raiz del proyecto he colocado el archivo vercel.json, para solucionar el problema de que siendo una SPA, al recargar el navegador mientras se usaba la web, daba error al cargar la web dependiendo de la extension en la que te encontrases. Ahora este archivo redirecciona al index.html y React Router se encarga de mostrar la web correctamente.
