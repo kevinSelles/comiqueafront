@@ -26,3 +26,9 @@
   font-weight: bold;
   color: whitesmoke;
 }
+
+@media (max-width: 643px) {
+  .ad-banner {
+    display: none;
+  }
+}

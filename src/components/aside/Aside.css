@@ -23,7 +23,7 @@
 }
 
 .aside-link:hover {
-  background-color: var(--color-bg);
+  background-color: #82b10042;
 }
 
 .aside-dropdown {
@@ -58,4 +58,57 @@
   cursor: pointer;
   background-color: transparent;
   border: transparent;
+}
+
+@media (max-width: 643px) {
+  .aside {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    height: 50px;
+    margin: 0 1rem 0 0;
+  }
+
+  .aside-dropdown-content {
+    position: absolute;
+    width: 200%;
+    right: 25px;
+    left: -30px;
+  }
+}
+
+@media (max-width: 475px) {
+  .aside {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 415px) {
+  .aside-link {
+    padding: 7px 7px;
+  }
+  
+  .aside-dropdown-button {
+    font-size: 12px;
+  }
+  
+  .aside-dropdown-item {
+    font-size: 13px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .aside {
+    font-size: 12px;
+  }
+
+  .aside-link {
+    padding: 7px 5px;
+  }
+
+  .aside-dropdown-item {
+  padding: 7px 10px;
+  font-size: 12px;
+  }
 }

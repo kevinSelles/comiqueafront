@@ -14,3 +14,9 @@
   padding: 16px;
   background-color: var(--color-bg);
 }
+
+@media (max-width: 643px) {
+  .app-main {
+    flex-direction: column;
+  }
+}

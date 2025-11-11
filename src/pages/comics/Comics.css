@@ -111,3 +111,66 @@
   font-size: 1rem;
   color: var(--color-text);
 }
+
+@media (max-width: 779px) {
+  .comic-image {
+    height: 230px;
+  }
+
+  .comics-container {
+    padding: 0;
+  }
+}
+
+@media (max-width: 715px) {
+  .comics-container {
+    padding-right: 0px;
+  }
+
+  .comic-card {
+    max-width: 200px;
+  }
+
+  .comic-image {
+    height: 220px;
+  }
+
+  .comics-grid {
+    gap: 0.8rem;
+  }
+
+  .comic-info {
+    padding: 1rem 0.5;
+  }
+}
+
+@media (max-width: 704px) {
+  .comics-container {
+    display: block;
+  }
+
+  .comics-grid {
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .comic-card {
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 484px) {
+  .comics-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 484px) {
+  .comic-card {
+    height: 330px;
+  }
+
+  .comic-image {
+    height: 150px;
+  }
+}
