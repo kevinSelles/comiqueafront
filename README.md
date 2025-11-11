@@ -2,7 +2,7 @@
 
 Este es el frontend de **Comiquea**, la web para organizar tu comicteca, consultar información de cómics, dejar comentarios y mantener listas personales de favoritos, leídos, comprados o deseados.
 
-El proyecto está creado con **React** y **Vite** como bundler.
+El proyecto está creado con **React** y **Vite**.
 
 ---
 
