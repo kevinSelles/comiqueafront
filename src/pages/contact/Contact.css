@@ -19,7 +19,7 @@
   text-align: center;
   font-size: 2rem;
   margin-bottom: 1.5rem;
-  color: #222;
+  color: var(--color-primary);
 }
 
 .contact-form {
@@ -80,4 +80,10 @@
   text-align: center;
   color: #b00020;
   font-weight: 500;
+}
+
+@media (max-width: 460px) {
+  .contact-intro {
+    font-size: 1rem;
+  }
 }

@@ -56,9 +56,11 @@ export default function ModalComic({ comic, onClose }) {
           ✕
         </button>
         <div className="modal-body">
+        {!editing && (
           <div className="modal-image-wrap">
             <img src={comic.img} alt={comic.title} className="modal-image" loading="lazy" />
           </div>
+        )}
           <div className="modal-content">
             {!editing ? (
               <>

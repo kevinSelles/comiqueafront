@@ -26,7 +26,13 @@ export default function Header({ onSearch }) {
           placeholder="Buscar cómic, autor, ISBN, fecha..."
           className="header-search"
           onKeyDown={(e) => {
-            if (e.key === "Enter") onSearch(e.target.value.trim());
+            if (e.key === "Enter") {
+              const term = e.target.value.trim();
+              if (term) {
+                onSearch(term);
+                navigate("/comics");
+              }
+            }
           }}
         />
       </div>

@@ -112,3 +112,71 @@
   font-size: 0.85rem;
   margin-top: 0.3rem;
 }
+
+@media (max-width: 581px) {
+  .comic-form-page {
+    max-width: 100%;
+    margin: 1.5rem 0.8rem;
+    padding: 1.2rem;
+    box-shadow: none;
+    border-radius: 8px;
+  }
+
+  .comic-form-page h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .comic-form {
+    gap: 0.8rem;
+  }
+
+  .comic-form label {
+    font-size: 0.95rem;
+  }
+
+  .comic-form input,
+  .comic-form textarea {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .image-preview img {
+    max-width: 100%;
+  }
+
+  .comic-form-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.7rem;
+  }
+
+  .submit-btn,
+  .cancel-btn {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .comic-form-page {
+    margin: 1rem 0.5rem;
+    padding: 1rem;
+  }
+
+  .comic-form input,
+  .comic-form textarea {
+    font-size: 0.9rem;
+  }
+
+  .comic-form-page h2 {
+    font-size: 1.2rem;
+  }
+
+  .submit-btn,
+  .cancel-btn {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+}

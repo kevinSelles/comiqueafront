@@ -13,6 +13,11 @@
   gap: 1rem;
 }
 
+.profile-page h2 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
 .profile-form label {
   display: flex;
   flex-direction: column;
@@ -83,4 +88,18 @@
 
 .delete-account-button:hover {
   background-color: #8b0000;
+}
+
+@media (max-width: 393px) {
+  .logout-button,
+  .delete-account-button {
+    padding: 0.5rem 0.9rem;
+  }
+}
+
+@media (max-width: 353px) {
+  .profile-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
 }
