@@ -1,15 +1,17 @@
 import "./Comics.css";
-import { useState } from "react";
-import ModalComic from "../../components/modalComic/ModalComic";
+import { useState, useEffect } from "react";
 import { useComics } from "../../config/useComics";
 import ComicCard from "../../components/comicCard/ComicCard";
 import Pagination from "../../components/pagination/Pagination";
+import ModalComic from "../../components/modalComic/ModalComic";
+import SortComics from "../../components/SortComics/SortComics";
 
 export default function Comics({ searchTerm }) {
   const [page, setPage] = useState(1);
+  const [sort, setSort] = useState("");
   const [activeComic, setActiveComic] = useState(null);
 
-  const { comics, totalPages, loading } = useComics(searchTerm, page);
+  const { comics, totalPages, loading } = useComics(searchTerm, page, 20, sort);
 
   const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
   const handleNext = () => setPage((prev) => Math.min(prev + 1, totalPages));
@@ -17,6 +19,7 @@ export default function Comics({ searchTerm }) {
   return (
     <main className="comics-container">
       <h2 className="comics-title">Catálogo de Cómics</h2>
+      <SortComics selectedSort={sort} onSortChange={setSort} />
       {loading ? (
         <p className="comics-loading">Cargando cómics...</p>
       ) : (
@@ -34,7 +37,9 @@ export default function Comics({ searchTerm }) {
           />
         </>
       )}
-      {activeComic && <ModalComic comic={activeComic} onClose={() => setActiveComic(null)} />}
+      {activeComic && (
+        <ModalComic comic={activeComic} onClose={() => setActiveComic(null)} />
+      )}
     </main>
   );
 }

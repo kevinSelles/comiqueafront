@@ -1,0 +1,43 @@
+.sort-dropdown {
+  position: relative;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.sort-button {
+  background-color: var(--color-primary, #333);
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.sort-button:hover {
+  background-color: var(--color-primary-dark, #555);
+}
+
+.sort-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 220px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  margin-top: 0.4rem;
+  padding: 0;
+  z-index: 10;
+}
+
+.sort-option {
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.sort-option:hover {
+  background-color: #f0f0f0;
+}

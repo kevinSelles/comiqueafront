@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { API_URL } from "../config/api";
 
-export function useComics(searchTerm, page = 1, limit = 20) {
+export function useComics(searchTerm, page = 1, limit = 20, sort = "") {
   const [comics, setComics] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -11,9 +11,16 @@ export function useComics(searchTerm, page = 1, limit = 20) {
       try {
         setLoading(true);
 
-        const url = searchTerm
-          ? `${API_URL}/comics/search?query=${encodeURIComponent(searchTerm)}&page=${page}&limit=${limit}`
-          : `${API_URL}/comics?page=${page}&limit=${limit}`;
+        let url = "";
+        if (searchTerm) {
+          url = `${API_URL}/comics/search?query=${encodeURIComponent(searchTerm)}&page=${page}&limit=${limit}`;
+        } else {
+          url = `${API_URL}/comics?page=${page}&limit=${limit}`;
+        }
+
+        if (sort) {
+          url += `&sort=${sort}`;
+        }
 
         const res = await fetch(url);
         const data = await res.json();
@@ -30,7 +37,7 @@ export function useComics(searchTerm, page = 1, limit = 20) {
     };
 
     fetchComics();
-  }, [searchTerm, page, limit]);
+  }, [searchTerm, page, limit, sort]);
 
   return { comics, totalPages, loading };
 }

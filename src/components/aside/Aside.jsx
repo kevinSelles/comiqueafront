@@ -1,15 +1,24 @@
 import "./Aside.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AdBanner from "../../utils/ads/bannerAside/AdBanner";
 
-export default function Aside() {
+export default function Aside({ onResetSearch }) {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleComicsClick = (e) => {
+    e.preventDefault();
+    onResetSearch();
+    navigate("/comics");
+  };
 
   return (
     <aside className="aside">
       <Link to="/" className="aside-link">Inicio</Link>
-      <Link to="/comics" className="aside-link">Cómics</Link>
+      <a href="/comics" onClick={handleComicsClick} className="aside-link">
+        Cómics
+      </a>
       <Link to="/news" className="aside-link">Noticias</Link>
       <Link to="/contact" className="aside-link">Contacto</Link>
       <div className="aside-dropdown">

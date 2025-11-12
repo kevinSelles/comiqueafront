@@ -8,11 +8,13 @@ import { useState } from "react";
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
 
+  const handleResetSearch = () => setSearchTerm("");
+
   return (
     <div className="app-container">
       <Header onSearch={setSearchTerm} />
       <div className="app-main">
-        <Aside />
+        <Aside onResetSearch={handleResetSearch} />
         <section className="app-content">
           <ComiqueaRouter searchTerm={searchTerm} />
         </section>
