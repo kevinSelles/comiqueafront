@@ -10,7 +10,7 @@ export default function Header({ onSearch }) {
     <header className="header">
       <div className="header-left">
         <img
-          src="/img/comiquea-logo.webp"
+          src="/img/comiquea-logo.png"
           alt="Logo"
           className="header-logo"
           onClick={() => navigate("/")}
