@@ -1,6 +1,8 @@
 import "./UserForms.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,9 @@ export default function Register() {
 
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,9 +40,12 @@ export default function Register() {
         return;
       }
 
+      login(data.userResponse, data.token);
+
       setSuccess(true);
-      setMessage("✅ Registro completado correctamente. Ya puedes iniciar sesión.");
-      setFormData({ userName: "", email: "", password: "" });
+      setMessage(`✅ Bienvenido, ${data.userResponse.userName}!`);
+      setTimeout(() => navigate("/"), 1500);
+
     } catch (error) {
       setSuccess(false);
       setMessage("❌ Error de conexión con el servidor.");
