@@ -25,7 +25,7 @@ export default function Home() {
       {
       title: "¿Y todo esto es gratuito?",
       text: "Si, es 100% gratuito. Estamos cansados de pagar por herramientas para organizar libros que no cubren nuestras necesidades o plataformas que exigen suscripciones mensuales para utilizar sus herramientas de organización. El mantenimiento se costeará gracias a la publicidad, pero puedes estar tranquilo. Sabemos que es agobiante cuando te bombardean con mil anuncios. Nuestra intención es que puedas navegar con tranquilidad, por lo que introduciremos la publicidad mínima para no entorpecer tu visita a Comiquea y a la vez poder costear los gastos que conlleva la web.",
-      img: "/img/gratis.webp",
+      img: "/img/gratis.png",
     },
        {
       title: "Evolución constante",
