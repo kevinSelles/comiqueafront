@@ -5,7 +5,7 @@ export default function Home() {
     {
       title: "¿Qué es Comiquea?",
       text: "Comiquea es una plataforma gratuita creada por y para amantes del cómic. Un espacio donde podrás descubrir, gestionar y organizar tus lecturas favoritas. Con un listado de cómics que no para de crecer gracias a los propios usuarios.",
-      img: "/img/comiquea-logo.webp",
+      img: "/img/comiquea-logo.png",
     },
     {
       title: "Tu organizador de cómics",
