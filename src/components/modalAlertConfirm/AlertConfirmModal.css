@@ -14,8 +14,9 @@
 
 .alert-modal,
 .confirm-modal {
-  background: #fff;
+  background: var(--color-light);
   padding: 1.5rem 2rem;
+  border: 5px solid var(--color-primary);
   border-radius: 0.75rem;
   max-width: 400px;
   width: 90%;

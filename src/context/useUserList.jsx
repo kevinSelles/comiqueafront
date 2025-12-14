@@ -39,7 +39,7 @@ export function useUserLists(comicId, user) {
   };
 
   const toggleList = async (listName, stateSetter) => {
-    if (!user) return alert("Debes iniciar sesión para guardar en tus listas.");
+    if (!user) return alert("Debes iniciar sesión para guardar cómics en tus listas.");
 
     try {
       const token = localStorage.getItem("token");
