@@ -12,8 +12,8 @@ export default function ProfileActions({ user, setMessage }) {
   };
 
   const handleDeleteAccount = async () => {
-    const confirmDelete = await Promise.resolve(
-      window.confirm("⚠️ Esta acción eliminará tu cuenta permanentemente. ¿Seguro que quieres continuar?")
+    const confirmDelete = await window.confirm(
+      "⚠️ Esta acción eliminará tu cuenta permanentemente. ¿Seguro que quieres continuar?"
     );
     if (!confirmDelete) return;
 
