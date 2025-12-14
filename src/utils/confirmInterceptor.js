@@ -1,9 +1,11 @@
-window.confirm = (message) => {
-  return new Promise((resolve) => {
-    const event = new CustomEvent("app-confirm", {
-      detail: { message, resolve },
-    });
+if (typeof window !== "undefined") {
+  window.confirm = (message) => {
+    return new Promise((resolve) => {
+      const event = new CustomEvent("app-confirm", {
+        detail: { message, resolve },
+      });
 
-    window.dispatchEvent(event);
-  });
-};
+      window.dispatchEvent(event);
+    });
+  };
+}
