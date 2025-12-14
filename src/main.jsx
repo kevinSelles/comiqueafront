@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AuthProvider } from "./context/AuthContext";
 import "./utils/alertInterceptor";
+import "./utils/confirmInterceptor";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

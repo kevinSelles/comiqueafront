@@ -18,6 +18,7 @@ function App() {
   return (
     <div className="app-container">
       <AlertModal />
+      <ConfirmModal />
       <Header onSearch={setSearchTerm} />
       <div className="app-main">
         <Aside onResetSearch={handleResetSearch} />
