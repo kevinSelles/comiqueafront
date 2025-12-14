@@ -84,16 +84,16 @@ El proyecto está creado con **React** y **Vite**.
 
 ### Seguridad
 
-- **RequireAuth.jsx**
+- **Protección de rutas privadas (RequireAuth.jsx)**
   Añadida comprobación de usuario y token validos en diferentes puntos de la app para impedir el acceso a usuarios no autorizados o no logueados a secciones especificas, que ahora redirigen automáticamente a la pantalla de login para verificar al usuario.
 
 - **Modificaciones**
-  Antes solo se comprobaba que localStorage contuviese un usuario y un token para conceder acceso. Ahora, con modificaciones en archivos como AuthContext.jsx y Login.jsx se mejora la seguridad, ya que no solo se comprueba la existencia de un usuario y un token, si no que también se conecta con el backend para comprobar que ambos son validos y existen en la base de datos.
+  Antes solo se comprobaba que localStorage contuviese un usuario y un token para conceder acceso. Ahora, con modificaciones en archivos como AuthContext.jsx y Login.jsx se mejora la seguridad, ya que no solo se comprueba la existencia de un usuario y un token, si no que también hacemos que el backend compruebe que ambos son validos y existen en la base de datos.
 
 - **App.jsx**
-  Añadida funcionalidad que evita cargar contenido antes de vereficar las credenciales del usuario, para evitar mostrar secciones privadas si no hay autorización.
+  Ahora App.jsx llama a AuthContext.jsx, para evitar cargar secciones privadas si no hay autorización.
 
 ### Mejoras en la UX
 
 - **Autologin**
-  Antes, el usuario debia pasar por el formulario de login despues de haberse registrado. Ahora, mediante modificaciones en el controlador de registro del backend y modificaciones en Register.jsx, el login se hace automáticamente tras complerar el registro de usuario.
+  Antes, el usuario debia pasar por el formulario de login despues de haberse registrado. Ahora, mediante modificaciones en el controlador de registro del backend y modificaciones en Register.jsx, el backend devuelve el token y los datos del usuario despues de completar el registro. De este modo, el login se hace automáticamente tras complerar el registro de usuario.
