@@ -1,16 +1,86 @@
-.alert-overlay {
+.alert-overlay,
+.confirm-overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 9999;
+  align-items: center;
+  z-index: 1000;
 }
 
-.alert-modal {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  min-width: 300px;
+.alert-modal,
+.confirm-modal {
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 0.75rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: scaleIn 0.2s ease-out;
+}
+
+.alert-modal p,
+.confirm-modal p {
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.alert-modal button,
+.confirm-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.alert-modal button {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.alert-modal button:hover {
+  background-color: #40a9ff;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.confirm-actions .danger {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+.confirm-actions .danger:hover {
+  background-color: #ff7875;
+}
+
+.confirm-actions button:not(.danger) {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.confirm-actions button:not(.danger):hover {
+  background-color: #d9d9d9;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
