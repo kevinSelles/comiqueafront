@@ -5,6 +5,7 @@ import Footer from "./components/footer/Footer";
 import ComiqueaRouter from "./router/ComiqueaRouter";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
+import AlertModal from "./components/modalAlert/AlertModal";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <div className="app-container">
+      <AlertModal />
       <Header onSearch={setSearchTerm} />
       <div className="app-main">
         <Aside onResetSearch={handleResetSearch} />
