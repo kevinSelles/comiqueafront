@@ -85,7 +85,7 @@ El proyecto está creado con **React** y **Vite**.
 ### Seguridad
 
 - **RequireAuth.jsx**
-  Añadida comprobación de usuario y token validos en diferentes puntos de la app para impedir el acceso a usuarios no autorizados o no logueados a secciones especificas.
+  Añadida comprobación de usuario y token validos en diferentes puntos de la app para impedir el acceso a usuarios no autorizados o no logueados a secciones especificas, que ahora redirigen automáticamente a la pantalla de login para verificar al usuario.
 
 - **Modificaciones**
   Antes solo se comprobaba que localStorage contuviese un usuario y un token para conceder acceso. Ahora, con modificaciones en archivos como AuthContext.jsx y Login.jsx se mejora la seguridad, ya que no solo se comprueba la existencia de un usuario y un token, si no que también se conecta con el backend para comprobar que ambos son validos y existen en la base de datos.
