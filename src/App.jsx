@@ -5,7 +5,7 @@ import Footer from "./components/footer/Footer";
 import ComiqueaRouter from "./router/ComiqueaRouter";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
-import AlertModal from "./components/modalAlert/AlertModal";
+import AlertModal from "./components/modalAlertConfirm/AlertModal";
 import ConfirmModal from "./components/modalAlertConfirm/ConfirmModal";
 
 function App() {
