@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import RequireAuth from "../context/RequireAuth";
 import Home from "../pages/home/Home";
 import Comics from "../pages/comics/Comics";
 import News from "../pages/news/News";
@@ -22,11 +23,26 @@ export default function ComiqueaRouter({ searchTerm }) {
       <Route path="/contact" element={<Contact />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/mycomics" element={<MyComics />} />
-      <Route path="/favourites" element={<Favourites />} />
-      <Route path="/readed" element={<Readed />} />
-      <Route path="/wanted" element={<Wanted />} />
+      <Route path="/profile" element={
+        <RequireAuth>
+          <Profile />
+        </RequireAuth>} />
+      <Route path="/mycomics" element={
+        <RequireAuth>
+          <MyComics />
+        </RequireAuth>} />
+      <Route path="/favourites" element={
+        <RequireAuth>  
+          <Favourites />
+        </RequireAuth>} />
+      <Route path="/readed" element={
+        <RequireAuth>
+          <Readed />
+        </RequireAuth>} />
+      <Route path="/wanted" element={
+        <RequireAuth>
+          <Wanted />
+        </RequireAuth>} />
     </Routes>
   );
 }

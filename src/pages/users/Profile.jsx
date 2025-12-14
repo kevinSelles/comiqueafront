@@ -1,6 +1,5 @@
 import "./Profile.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import { useAuth } from "../../context/AuthContext";
 import FormUser from "../../components/profile/UserForm";
@@ -9,7 +8,6 @@ import ProfileActions from "../../components/profile/ProfileActions";
 import { useHandleUserSave } from "../../config/useHandleUserSave";
 
 export default function Profile() {
-  const navigate = useNavigate();
   const { logout } = useAuth();
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
@@ -25,10 +23,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserData = async () => {
       const storedUser = localStorage.getItem("user");
-      if (!storedUser) {
-        navigate("/login");
-        return;
-      }
+      if (!storedUser) return;
 
       const parsed = JSON.parse(storedUser);
       setUser(parsed);
@@ -45,20 +40,17 @@ export default function Profile() {
         const res = await fetch(`${API_URL}/users/${parsed._id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        if (!res.ok) return;
 
         const data = await res.json();
-        if (res.ok) {
-          setUser(data);
-          localStorage.setItem("user", JSON.stringify(data));
-        } else {
-          console.error("Error al obtener datos del usuario:", data);
-        }
+        setUser(data);
+        localStorage.setItem("user", JSON.stringify(data));
       } catch (error) {
         console.error("Error al conectar con el backend:", error);
       }
     };
     fetchUserData();
-  }, [navigate]);
+  }, []);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
