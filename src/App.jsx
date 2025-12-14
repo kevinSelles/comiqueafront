@@ -6,6 +6,7 @@ import ComiqueaRouter from "./router/ComiqueaRouter";
 import { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import AlertModal from "./components/modalAlert/AlertModal";
+import ConfirmModal from "./components/modalAlertConfirm/ConfirmModal";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
