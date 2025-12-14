@@ -4,7 +4,13 @@ import { useAuth } from "../../context/AuthContext";
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    if (!user) return;
+    logout();
+    navigate("/login");
+  };
 
   return (
     <header className="header">
@@ -40,6 +46,12 @@ export default function Header({ onSearch }) {
         {user ? (
           <>
             <span className="header-username">{user.userName}</span>
+             <button
+              className="header-logout"
+              onClick={handleLogout}
+            >
+              Cerrar sesión
+            </button>
             <Link to="/profile" className="header-button primary">
               Mi perfil
             </Link>

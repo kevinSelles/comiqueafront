@@ -96,6 +96,16 @@
   background-color: rgba(255, 255, 255, 0.699);
 }
 
+.header-logout {
+  background-color: transparent;
+  color: var(--color-light);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  top: -6px;
+}
+
 @media (max-width: 845px) {
   .header-search {
     width: 90%;
