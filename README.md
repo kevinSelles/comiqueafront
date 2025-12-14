@@ -97,3 +97,9 @@ El proyecto está creado con **React** y **Vite**.
 
 - **Autologin**
   Antes, el usuario debia pasar por el formulario de login despues de haberse registrado. Ahora, mediante modificaciones en el controlador de registro del backend y modificaciones en Register.jsx, el backend devuelve el token y los datos del usuario despues de completar el registro. De este modo, el login se hace automáticamente tras complerar el registro de usuario.
+
+- **Cierre de sesión**
+  Se mantiene el boton de cierre de sesión en el menú de perfil del usuario, pero ahora además se añade la opción de cierre de sesión en el propio header para que sea más accesible.
+
+- **Alertas**
+  Ahora los mensajes de alerta no usan la ventana predeterminada del navegador y se han sustituido por modales personalizados que muestran a información más clara y visible.
