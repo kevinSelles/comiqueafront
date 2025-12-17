@@ -1,7 +1,7 @@
 import "./SortComics.css";
 import { useState } from "react";
 
-export default function SortComics({ selectedSort, onSortChange }) {
+export default function SortComics({ selectedSort, onSortChange, onShowAll }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState("Ordenar por...");
 
@@ -22,23 +22,28 @@ export default function SortComics({ selectedSort, onSortChange }) {
   };
 
   return (
-    <div className="sort-dropdown">
-      <button className="sort-button" onClick={() => setOpen(!open)}>
-        {selected} ▼
+    <div className="sort-controls">
+      <button className="show-all-button" onClick={onShowAll}>
+        Todos los cómics
       </button>
-      {open && (
-        <ul className="sort-menu">
-          {options.map((option) => (
-            <li
-              key={option.value}
-              className="sort-option"
-              onClick={() => handleSelect(option)}
-            >
-              {option.label}
-            </li>
-          ))}
-        </ul>
-      )}
+      <div className="sort-dropdown">
+        <button className="sort-button" onClick={() => setOpen(!open)}>
+          {selected} ▼
+        </button>
+        {open && (
+          <ul className="sort-menu">
+            {options.map((option) => (
+              <li
+                key={option.value}
+                className="sort-option"
+                onClick={() => handleSelect(option)}
+              >
+                {option.label}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

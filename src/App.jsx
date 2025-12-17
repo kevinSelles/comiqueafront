@@ -24,7 +24,10 @@ function App() {
       <div className="app-main">
         <Aside onResetSearch={handleResetSearch} />
         <section className="app-content">
-          <ComiqueaRouter searchTerm={searchTerm} />
+          <ComiqueaRouter 
+            searchTerm={searchTerm}
+            onResetSearch={handleResetSearch}
+          />
         </section>
       </div>
       <Footer />

@@ -103,3 +103,9 @@ El proyecto está creado con **React** y **Vite**.
 
 - **Alertas**
   Ahora los mensajes de alerta no usan la ventana predeterminada del navegador y se han sustituido por modales personalizados que muestran a información más clara y visible.
+
+- **Input de búsqueda**
+  Modificado Header.jsx para que ahora el input de búsqueda se limpie automáticamente al pulsar intro y realizar la búsqueda.
+
+- **Botón Todos los cómics**
+  Cuando se hacía una búsqueda, había que recargar a web o pulsar cómics en el aside para volver a mostrarlos todos. Ahora se ha añadido un nuevo botón en la pagina cómics para facilitar el volver a mostrarlos todos.

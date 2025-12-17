@@ -13,11 +13,11 @@ import Readed from "../pages/myLists/Readed";
 import Wanted from "../pages/myLists/Wanted";
 import NewComic from "../pages/newComic/NewComic";
 
-export default function ComiqueaRouter({ searchTerm }) {
+export default function ComiqueaRouter({ searchTerm, onResetSearch }) {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/comics" element={<Comics searchTerm={searchTerm} />} />
+      <Route path="/comics" element={<Comics searchTerm={searchTerm} onResetSearch={onResetSearch} />} />
       <Route path="/comics/new" element={<NewComic />} />
       <Route path="/news" element={<News />} />
       <Route path="/contact" element={<Contact />} />

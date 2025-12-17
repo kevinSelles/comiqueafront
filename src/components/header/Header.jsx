@@ -1,15 +1,28 @@
 import "./Header.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
 
 export default function Header({ onSearch }) {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const [searchValue, setSearchValue] = useState("");
 
   const handleLogout = () => {
     if (!user) return;
     logout();
     navigate("/login");
+  };
+
+    const handleSearchKeyDown = (e) => {
+    if (e.key === "Enter") {
+      const term = searchValue.trim();
+      if (!term) return;
+
+      onSearch(term);
+      setSearchValue("");
+      navigate("/comics");
+    }
   };
 
   return (
@@ -31,15 +44,9 @@ export default function Header({ onSearch }) {
           type="text"
           placeholder="Buscar cómic, autor, ISBN, fecha..."
           className="header-search"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              const term = e.target.value.trim();
-              if (term) {
-                onSearch(term);
-                navigate("/comics");
-              }
-            }
-          }}
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          onKeyDown={handleSearchKeyDown}
         />
       </div>
       <div className="header-right">
