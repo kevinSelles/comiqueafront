@@ -109,3 +109,6 @@ El proyecto está creado con **React** y **Vite**.
 
 - **Botón Todos los cómics**
   Cuando se hacía una búsqueda, había que recargar a web o pulsar cómics en el aside para volver a mostrarlos todos. Ahora se ha añadido un nuevo botón en la pagina cómics para facilitar el volver a mostrarlos todos.
+
+- **Publicar cómic**
+  Modificado Comics.jsx y PostComicModal.jsx para que al añadir un nuevo cómic, ya no se redirija a la página de inicio. Ahora se le pregunta al usuario si quiere abrir la ventana del cómic añadido o si quiere volver al formulario para añadir más cómics.

@@ -5,6 +5,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import useComicFormHandler from "./useComicFormHandler";
 import ComicFormFields from "./ComicFormFields";
+import PostComicModal from "../modalPostComic/PostComicModal";
 
 export default function ComicForm({ comic = null, onSuccess, onCancel }) {
   const { user } = useAuth();
@@ -12,6 +13,7 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
   const [imagePreview, setImagePreview] = useState(comic?.img || null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [createdComicId, setCreatedComicId] = useState(null);
 
   const {
     register,
@@ -28,8 +30,9 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
     setLoading,
     reset,
     setImagePreview,
-    onSuccess,
-    navigate,
+    onSuccess: (createdComic) => {
+      setCreatedComicId(createdComic._id);
+    },
     setValue,
   });
 
@@ -66,6 +69,12 @@ export default function ComicForm({ comic = null, onSuccess, onCancel }) {
         </div>
       </form>
       {message && <p className="form-message">{message}</p>}
+      {createdComicId && (
+        <PostComicModal
+          comicId={createdComicId}
+          onClose={() => setCreatedComicId(null)}
+        />
+      )}
     </main>
   );
 }

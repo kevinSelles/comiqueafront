@@ -74,12 +74,9 @@ export default function useComicFormHandler({
       if (onSuccess) onSuccess(data);
 
       if (!isEdit) {
-        setTimeout(() => {
           reset();
           if (typeof setImagePreview === "function") setImagePreview(null);
-          if (typeof navigate === "function") navigate(`/`);
-        }, 1500);
-      }
+        };
     } catch (error) {
       setMessage(`❌ ${error.message}`);
     } finally {
