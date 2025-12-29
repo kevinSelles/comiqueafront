@@ -93,6 +93,9 @@ El proyecto está creado con **React** y **Vite**.
 - **App.jsx**
   Ahora App.jsx llama a AuthContext.jsx, para evitar cargar secciones privadas si no hay autorización.
 
+- **Editar cómics**
+  Antes, todos los usuarios podían editar la información de cualquier cómic. Para evitar que un usuario malintencionado pueda editar y colocar información erronea, la opción de editar ahora solo está disponible para administradores. Se verifica el rol a través del backend y además en el frontend ya no se muestra el botón a usuarios no administradores.
+
 ### Mejoras en la UX
 
 - **Autologin**

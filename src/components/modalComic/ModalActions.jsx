@@ -46,7 +46,7 @@ export default function ModalActions({
       >
         Lo quiero
       </button>
-      {user && (
+      {user?.rol === "admin" && (
         <button onClick={() => setEditing(true)} className="btn-edit" title="Editar cómic">
           ✏️ Editar
         </button>
