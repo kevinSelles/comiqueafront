@@ -19,7 +19,7 @@ export default function Home() {
     },
     {
       title: "Una web creada por toda la comunidad de lectores.",
-      text: "Nuestra base de datos de cómics va creciendo en tiempo real gracias a las aportaciones de lectores como tu. No solo tienes la opción de añadir cómics, también podrás editar los existentes si detectas algun error o dispones de más información. Desde clásicos inolvidables hasta lanzamientos recientes, descubre cómics que quizá nunca habrías encontrado por tu cuenta y si no encuentras el cómic que buscas, puedes añadirlo tu mismo.",
+      text: "Nuestra base de datos de cómics va creciendo en tiempo real gracias a las aportaciones de lectores como tu. Desde clásicos inolvidables hasta lanzamientos recientes, descubre cómics que quizá nunca habrías encontrado por tu cuenta y si no encuentras el cómic que buscas, puedes añadirlo tu mismo. ¿Has visto algún error o falta informacion de algún cómic? No dudes en escribirnos y revisaremos todo para que quede perfecto.",
       img: "/img/lectores.webp",
     },
       {
