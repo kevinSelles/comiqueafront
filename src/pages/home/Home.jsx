@@ -9,22 +9,22 @@ export default function Home() {
     },
     {
       title: "Tu organizador de cómics",
-      text: "Largas sagas que no vienen numeradas; editoriales que cambian los formatos y nombres de las colecciones; universos que entrelazan sus historias... Todos los lectores de cómics llegamos a un punto en el que nos perdemos dentro de nuestra propia colección. ¿No recuerdas si ya tienes ese número que acabas de ver en la tienda? ¿No consigues aclararte sobre el orden de lectura? ¿Querías comprar tantos títulos que se te acaban olvidado los nombres? Con Comiquea, todo eso se acabó.",
+      text: "Largas sagas que no vienen numeradas; editoriales que cambian los formatos y nombres de las colecciones; universos que entrelazan sus historias... Todos los lectores de cómics llegamos a un punto en el que nos perdemos dentro de nuestra propia colección. ¿No recuerdas si ya tienes ese número que acabas de ver en la tienda? ¿No consigues aclararte sobre el orden de lectura? ¿Querías comprar tantos títulos que se te acaban olvidando los nombres? Con Comiquea, todo eso se acabó.",
       img: "/img/organizador.webp",
     },
     {
       title: "Multitud de opciones para ayudarte",
-      text: "Marca los cómics que ya tienes, los que has leido, los que quieres comprar, tus favoritos... Además, si no estás seguro de que un cómic pueda gustarte, en Comiquea podras encontrar opiniones de otros usuarios que seguro que te darán una idea de si ese título es lo que buscas y tu también podras escribir valoraciones para ayudar a otros lectores como tu.",
+      text: "Marca los cómics que ya tienes, los que has leído, los que quieres comprar, tus favoritos... Además, si no estás seguro de que un cómic pueda gustarte, en Comiquea podrás encontrar opiniones de otros usuarios que seguro que te darán una idea de si ese título es lo que buscas y tu también podrás escribir valoraciones para ayudar a otros lectores como tu.",
       img: "/img/monton-comics.webp",
     },
     {
       title: "Una web creada por toda la comunidad de lectores.",
-      text: "Nuestra base de datos de cómics va creciendo en tiempo real gracias a las aportaciones de lectores como tu. Desde clásicos inolvidables hasta lanzamientos recientes, descubre cómics que quizá nunca habrías encontrado por tu cuenta y si no encuentras el cómic que buscas, puedes añadirlo tu mismo. ¿Has visto algún error o falta informacion de algún cómic? No dudes en escribirnos y revisaremos todo para que quede perfecto.",
+      text: "Nuestra base de datos de cómics va creciendo en tiempo real gracias a las aportaciones de lectores como tú. Desde clásicos inolvidables hasta lanzamientos recientes, descubre cómics que quizá nunca habrías encontrado por tu cuenta y si no encuentras el cómic que buscas, puedes añadirlo tú mismo. ¿Has visto algún error o falta información de algún cómic? No dudes en escribirnos y revisaremos todo para que quede perfecto.",
       img: "/img/lectores.webp",
     },
       {
       title: "¿Y todo esto es gratuito?",
-      text: "Si, es 100% gratuito. Estamos cansados de pagar por herramientas para organizar libros que no cubren nuestras necesidades o plataformas que exigen suscripciones mensuales para utilizar sus herramientas de organización. El mantenimiento se costeará gracias a la publicidad, pero puedes estar tranquilo. Sabemos que es agobiante cuando te bombardean con mil anuncios. Nuestra intención es que puedas navegar con tranquilidad, por lo que introduciremos la publicidad mínima para no entorpecer tu visita a Comiquea y a la vez poder costear los gastos que conlleva la web.",
+      text: "Sí, es 100% gratuito. Estamos cansados de pagar por herramientas para organizar libros que no cubren nuestras necesidades o plataformas que exigen suscripciones mensuales para utilizar sus herramientas de organización. El mantenimiento se costeará gracias a la publicidad, pero puedes estar tranquilo. Sabemos que es agobiante cuando te bombardean con mil anuncios. Nuestra intención es que puedas navegar con tranquilidad, por lo que introduciremos la publicidad mínima para no entorpecer tu visita a Comiquea y a la vez poder costear los gastos que conlleva la web.",
       img: "/img/gratis.png",
     },
        {
