@@ -5,3 +5,12 @@
   color: var(--color-light);
   font-size: 0.875rem;
 }
+
+.footer-link {
+  color: var(--color-light);
+  text-decoration: underline;
+}
+
+.footer-link:hover {
+  opacity: 0.85;
+}
