@@ -25,12 +25,16 @@
 
 .modal-close {
   position: absolute;
-  right: 5px;
+  right: 20px;
   top: 5px;
   background: transparent;
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
+}
+
+.modal-close:hover {
+  color: rgb(153, 0, 0);
 }
 
 .modal-body {

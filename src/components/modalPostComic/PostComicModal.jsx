@@ -8,11 +8,18 @@ export default function PostComicModal({ comicId, onClose }) {
     <div
       className="modal-overlay"
       onClick={(e) => e.target.classList.contains("modal-overlay") && onClose()}
-    >
-      <div className="modal" role="dialog" aria-modal="true">
+      >
+      <div className="modalpost" role="dialog" aria-modal="true">
+        <button
+          className="modalpost-close"
+          aria-label="Cerrar modal"
+          onClick={onClose}
+        >
+          ✕
+        </button>
         <h3>✅ Cómic añadido correctamente</h3>
         <p>¿Qué te gustaría hacer ahora?</p>
-        <div className="modal-actions">
+        <div className="modalpost-actions">
           <button
             className="primary"
             onClick={() => {
@@ -29,9 +36,6 @@ export default function PostComicModal({ comicId, onClose }) {
             }}
           >
             Añadir otro cómic
-          </button>
-          <button className="secondary" onClick={onClose}>
-            Cerrar
           </button>
         </div>
       </div>
