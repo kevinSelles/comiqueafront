@@ -9,6 +9,7 @@
 .footer-link {
   color: var(--color-light);
   text-decoration: underline;
+  font-weight: bold;
 }
 
 .footer-link:hover {
